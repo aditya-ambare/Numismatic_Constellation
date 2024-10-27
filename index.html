@@ -1,100 +1,99 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <link rel="stylesheet" href="css/leaflet.css">
-    <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
-    <link rel="stylesheet" href="css/qgis2web.css">
-    <link rel="stylesheet" href="css/fontawesome-all.min.css">
-    <link rel="stylesheet" href="css/leaflet-search.css">
-    <link rel="stylesheet" href="css/filter.css">
-    <link rel="stylesheet" href="css/nouislider.min.css">
-    <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
-    <link rel="stylesheet" href="css/leaflet-measure.css">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-search.css">
+        <link rel="stylesheet" href="css/filter.css">
+        <link rel="stylesheet" href="css/nouislider.min.css">
+        <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
 
-    <!-- Link to Google Fonts for Open Sans -->
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+        <!-- Link to Google Fonts for Open Sans -->
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+       
+        <style>
+            /* Additional styles */
+            html, body, #map {
+                width: 100%;
+                height: 100%;
+                padding: 0;
+                margin: 0;
+                font-family: 'Open Sans', Arial, sans-serif; /* Apply Open Sans as the default font */
+                font-weight: 300;
+            }
+    
+            /* Existing styles */
+            html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                overflow: hidden; /* Prevent scrollbars */
+            }
+    
+            #map {
+                width: 100%;
+                height: 100%;
+                position: relative;
+            }
+    
+            /* Adjustments for menu positioning */
+            #menu {
+                position: absolute;
+                bottom: 10px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 1000;
+                background-color: rgba(0, 0, 0, 0.5); /* Sliderbackground */
+                padding: 10px;
+                border-radius: 5px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                color: white; /* Updated text color to white */
+                font-size: 16px; /* Updated font size */
+            }
+    
+            /* Slider styling */
+            .slider {
+                height: 18px; /* Slider height */
+                margin-bottom: 20px; /* Space below the slider */
+            }
+            .centered-content {
+                text-align: center; /* Center-align content */
+            }
+            .filterlabel {
+                display: inline-block; /* Ensure block-level element for margin auto to work */
+                margin-bottom: 5px;
+                cursor: pointer;
+            }
+    
+            /* Hide default attribution */
+            .leaflet-bottom.leaflet-right {
+                display: none;
+            }
+    
+            /* Custom attribution positioning */
+            .leaflet-bottom {
+                position: absolute;
+                bottom: 10px; /* Adjust as needed */
+                left: 10px; /* Adjust as needed */
+                z-index: 1000;
+                background-color: rgba(255, 255, 255, 0.8);
+                padding: 5px 10px;
+                border-radius: 5px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+        </style>
 
-
-    <style>
-        /* Additional styles */
-        html, body, #map {
-            width: 100%;
-            height: 100%;
-            padding: 0;
-            margin: 0;
-            font-family: 'Open Sans', Arial, sans-serif; /* Apply Open Sans as the default font */
-            font-weight: 300;
-        }
-
-        /* Existing styles */
-        html, body {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden; /* Prevent scrollbars */
-        }
-
-        #map {
-            width: 100%;
-            height: 100%;
-            position: relative;
-        }
-
-        /* Adjustments for menu positioning */
-        #menu {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-            background-color: rgba(0, 0, 0, 0.5); /* Sliderbackground */
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            color: white; /* Updated text color to white */
-            font-size: 16px; /* Updated font size */
-        }
-
-        /* Slider styling */
-        .slider {
-            height: 18px; /* Slider height */
-            margin-bottom: 20px; /* Space below the slider */
-        }
-        .centered-content {
-            text-align: center; /* Center-align content */
-        }
-        .filterlabel {
-            display: inline-block; /* Ensure block-level element for margin auto to work */
-            margin-bottom: 5px;
-            cursor: pointer;
-        }
-
-        /* Hide default attribution */
-        .leaflet-bottom.leaflet-right {
-            display: none;
-        }
-
-        /* Custom attribution positioning */
-        .leaflet-bottom {
-            position: absolute;
-            bottom: 10px; /* Adjust as needed */
-            left: 10px; /* Adjust as needed */
-            z-index: 1000;
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 5px 10px;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-    </style>
-
-    <title>The Numismatic Constellation</title>
-</head>
+        <title>The Numismatic Constellation</title>
+    </head>
     <body>
         <div id="map">
         </div>
@@ -125,15 +124,16 @@
         <script src="data/Origin_7.js"></script>
         <script src="data/CityofMeeting_8.js"></script>
         <script>
+
+
+
             var map = L.map('map', {
                 zoomControl: false, maxZoom: 25, minZoom: 1 /* COPY ALL THIS */
             }).fitBounds([[-120, -100], [120, 80]]);  /* COPY ALL THIS */
             //var hash = new L.Hash(map); /* comment this to stop auto restore of map */
 
             // Set the default view at the very end
-            map.setView([10, 0], 2.5); // Default view with center coordinates and zoom level
-
-
+            map.setView([30, 0], 2 ); // Default view with center coordinates and zoom level
 
 
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
@@ -176,6 +176,9 @@
             this._div.innerHTML = '<h2>The Numismatic Constellation</h2>';
         };
         title.addTo(map);
+
+        // Static Abstract
+
         var abstract = new L.Control({'position':'topleft'});
         abstract.onAdd = function (map) {
             this._div = L.DomUtil.create('div',
@@ -185,14 +188,29 @@
                 abstract.show();
                 return this._div;
             };
+        
+            // Static Abstract
+
+
             abstract.show = function () {
                 this._div.classList.remove("abstract");
                 this._div.classList.add("abstractUncollapsed");
-                this._div.innerHTML = `Since the winter of 2019 in Barcelona, this serendipitous journey has been a joy as I cross paths with amazing individuals with incredible stories.<br /><br />
-    I am extremely grateful to you for indulging in my request.<br /><br />
-    I am intrigued to see how this lifelong project matures over the open-ended timeline.<br /><br />
-    Lastly, Linara—thank you for your eternal patience.`;
-        };
+                this._div.innerHTML = 'Since the winter of 2019 in Barcelona,' +
+                    'this serendipitous journey has been a joy ' +
+                    'as I cross paths with amazing individuals with incredible stories. ' +
+                    'I am extremely grateful <br />' +
+                    'to you for indulging in my request. ' +
+                    'I am intrigued to see how <br />' +
+                    'this lifelong project matures over the open - ended timeline. <br />' +
+                    'Lastly, Linara—thank you for your eternal patience. <br />' +
+                    '2024-06-21';
+            };
+
+
+
+
+
+;
         abstract.addTo(map);
         var zoomControl = L.control.zoom({
             position: 'topleft'
@@ -222,26 +240,30 @@
             minNativeZoom: 0,
             maxNativeZoom: 20
         });
-        layer_World_0;
-        function pop_AllCountries_1(feature, layer) {
-            var popupContent = '<table>\
-                    <tr>\
-                        <th scope="row">Country</th>\
-                        <td>' + (feature.properties['WB_NAME'] !== null ? autolinker.link(feature.properties['WB_NAME'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">Year</th>\
-                        <td>' + (feature.properties['Year'] !== null ? autolinker.link(feature.properties['Year'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                </table>';
-            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
-			layer.on('popupopen', function(e) {
-				addClassToPopupIfMedia(content, e.popup);
-			});
-			layer.bindPopup(content, { maxHeight: 400 });
-        }
+            layer_World_0;
+            //replace to remove year of meeting
 
-            var pattern_AllCountries_1_0 = new L.StripePattern({
+        function pop_AllCountries_1(feature, layer) {
+                var popupContent = '<table>\
+            <tr>\
+                <th scope="row">Country</th>\
+                <td>' + (feature.properties['WB_NAME'] !== null ? autolinker.link(feature.properties['WB_NAME'].toLocaleString()) : '') + '</td>\
+            </tr>\
+            <tr>\
+                <th scope="row">Year</th>\
+                <td>' + (feature.properties['Year'] !== null ? autolinker.link(feature.properties['Year'].toLocaleString()) : '') + '</td>\
+            </tr>\
+        </table>';
+                var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+                layer.on('popupopen', function (e) {
+                    addClassToPopupIfMedia(content, e.popup);
+                });
+                layer.bindPopup(content, { maxHeight: 400 });
+            }
+           //replace to remove year of meeting
+
+        // replace
+        var pattern_AllCountries_1_0 = new L.StripePattern({
                 weight: 0.5,
                 spaceWeight: 1,
                 color: '#f7fbff',
@@ -366,6 +388,10 @@
                 spaceOpacity: 0.5,
                 angle: 360
             });
+
+        //replace
+
+
         pattern_AllCountries_1_0.addTo(map);
         function style_AllCountries_1_0(feature) {
             switch(String(feature.properties['Year'])) {
@@ -432,7 +458,6 @@
                 interactive: true,
             }
                     break;
-                    
             }
         }
         function style_AllCountries_1_1(feature) {
@@ -527,7 +552,7 @@
                 fillOpacity: 0,
                 interactive: true,
             }
-                    break; 
+                    break;
             }
         }
         map.createPane('pane_AllCountries_1');
@@ -542,10 +567,12 @@
             onEachFeature: pop_AllCountries_1,
             styles: [style_AllCountries_1_0,style_AllCountries_1_1,]
         });
-            bounds_group.addLayer(layer_AllCountries_1);
+        bounds_group.addLayer(layer_AllCountries_1);
 
-            // Giovani Part
-            function createStarShape(latlng, options) {
+
+        //GioVanni
+
+        function createStarShape(latlng, options) {
                 return L.marker(latlng, {
                     icon: L.divIcon({
                         className: '',
@@ -597,28 +624,41 @@
                 });
                 layer.bindPopup(content, { maxHeight: 400 });
             }
+            
              // Giovani Part
 
-
         bounds_group.addLayer(layer_G_2);
-            map.addLayer(layer_G_2);
+        map.addLayer(layer_G_2);
+
 
 
         function pop_TheNetwork_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Year'] !== null ? autolinker.link(feature.properties['Year'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
         }
 
-            function style_TheNetwork_3_0() {
-                return {
-                    pane: 'pane_TheNetwork_3',
-                    opacity: 0.3, /* COPY ALL THIS */
-                    color: 'rgba(0,228,232,0.2)',
-                    dashArray: '',
-                    lineCap: 'square',
-                    lineJoin: 'bevel',
-                    weight: 0.2,/* COPY ALL THIS */
-                    fillOpacity: 0,
-                    interactive: true,
+        //Replace
+        function style_TheNetwork_3_0() {
+            return {
+                pane: 'pane_TheNetwork_3',
+                opacity: 0.3, /* COPY ALL THIS */
+                color: 'rgba(0,228,232,0.2)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 0.2,/* COPY ALL THIS */
+                fillOpacity: 0,
+                interactive: true,
             }
+            //Replace
         }
         map.createPane('pane_TheNetwork_3');
         map.getPane('pane_TheNetwork_3').style.zIndex = 403;
@@ -637,64 +677,7 @@
         function pop_PathtakenbytheCoins_4(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['No.'] !== null ? autolinker.link(feature.properties['No.'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['Title'] !== null ? autolinker.link(feature.properties['Title'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['Denomination'] !== null ? autolinker.link(feature.properties['Denomination'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['Currency'] !== null ? autolinker.link(feature.properties['Currency'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['Country_Coin'] !== null ? autolinker.link(feature.properties['Country_Coin'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['City_Coin'] !== null ? autolinker.link(feature.properties['City_Coin'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['Initials'] !== null ? autolinker.link(feature.properties['Initials'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['City_Collection'] !== null ? autolinker.link(feature.properties['City_Collection'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['Country_Collection'] !== null ? autolinker.link(feature.properties['Country_Collection'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
                         <td colspan="2">' + (feature.properties['Year'] !== null ? autolinker.link(feature.properties['Year'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['Coin_Latitude'] !== null ? autolinker.link(feature.properties['Coin_Latitude'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['Coin_Longitude'] !== null ? autolinker.link(feature.properties['Coin_Longitude'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['Country_Origin'] !== null ? autolinker.link(feature.properties['Country_Origin'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['City_Origin'] !== null ? autolinker.link(feature.properties['City_Origin'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['Origin_Latitude'] !== null ? autolinker.link(feature.properties['Origin_Latitude'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['Origin_Longitude'] !== null ? autolinker.link(feature.properties['Origin_Longitude'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['Col_Latitude'] !== null ? autolinker.link(feature.properties['Col_Latitude'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['Col_Longitude'] !== null ? autolinker.link(feature.properties['Col_Longitude'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['Distance_Travelled'] !== null ? autolinker.link(feature.properties['Distance_Travelled'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['Same_OriginAsCoin'] !== null ? autolinker.link(feature.properties['Same_OriginAsCoin'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
@@ -703,8 +686,8 @@
 			});
 			layer.bindPopup(content, { maxHeight: 400 });
         }
-
-            function style_PathtakenbytheCoins_4_0() {
+        // Replace
+        function style_PathtakenbytheCoins_4_0() {
                 return {
                     pane: 'pane_PathtakenbytheCoins_4', /* COPY ALL THIS */
                     opacity: 0.5,
@@ -716,7 +699,9 @@
                     fillOpacity: 0,
                     interactive: false,
             }
+        //Replace
         }
+
         map.createPane('pane_PathtakenbytheCoins_4');
         map.getPane('pane_PathtakenbytheCoins_4').style.zIndex = 404;
         map.getPane('pane_PathtakenbytheCoins_4').style['mix-blend-mode'] = 'normal';
@@ -734,9 +719,6 @@
         function pop_CountriesofTheCoins_5(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
-                        <td colspan="2"><strong>Thank You </strong><br />' + (feature.properties['Person'] !== null ? autolinker.link(feature.properties['Person'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
                         <th scope="row">Title</th>\
                         <td>' + (feature.properties['Title'] !== null ? autolinker.link(feature.properties['Title'].toLocaleString()) : '') + '</td>\
                     </tr>\
@@ -747,10 +729,16 @@
                         <td colspan="2"><strong>Year of Meeting</strong><br />' + (feature.properties['Year'] !== null ? autolinker.link(feature.properties['Year'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
+                        <td colspan="2"><strong>Thank You </strong><br />' + (feature.properties['Person'] !== null ? autolinker.link(feature.properties['Person'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
                         <td colspan="2"><strong>Country of the Friend</strong><br />' + (feature.properties['Country_Origin'] !== null ? autolinker.link(feature.properties['Country_Origin'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <td colspan="2"><strong>City of the Friend</strong><br />' + (feature.properties['City_Origin'] !== null ? autolinker.link(feature.properties['City_Origin'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Year_Meeting'] !== null ? autolinker.link(feature.properties['Year_Meeting'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <td colspan="2"><strong>How far did they Travel?</strong><br />' + (feature.properties['Distance_Travelled'] !== null ? autolinker.link(feature.properties['Distance_Travelled'].toLocaleString()) : '') + '</td>\
@@ -787,14 +775,14 @@
                 pane: 'pane_CountriesofTheCoins_5',
                 radius: 4.0,
                 opacity: 1,
-                color: 'rgba(255,255,255,1)',
+                color: 'rgba(35,35,35,0.0)',
                 dashArray: '',
                 lineCap: 'butt',
                 lineJoin: 'miter',
                 weight: 1,
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(255,255,255,1)',//Replace
+                fillColor: 'rgba(255,255,255,1)', //Replace
                 interactive: true,
             }
         }
@@ -836,6 +824,10 @@
                         <th scope="row">City of the Friend</th>\
                         <td>' + (feature.properties['City_Origin'] !== null ? autolinker.link(feature.properties['City_Origin'].toLocaleString()) : '') + '</td>\
                     </tr>\
+                    <tr>\
+                        <th scope="row">Year</th>\
+                        <td>' + (feature.properties['Year'] !== null ? autolinker.link(feature.properties['Year'].toLocaleString()) : '') + '</td>\
+                    </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
 			layer.on('popupopen', function(e) {
@@ -843,6 +835,8 @@
 			});
 			layer.bindPopup(content, { maxHeight: 400 });
         }
+
+        //Replace 
 
         function style_Friends_6_0() {
             return {
@@ -859,8 +853,12 @@
                 fillColor: 'rgba(255,254,255,0.5)', //Replace
                 interactive: true,
             }
+
+            //Replace
         }
-            map.createPane('pane_Friends_6'); //Replace whole section Stars
+
+        //Replace
+        map.createPane('pane_Friends_6'); //Replace whole section Stars
             map.getPane('pane_Friends_6').style.zIndex = 406;
             map.getPane('pane_Friends_6').style['mix-blend-mode'] = 'normal';
 
@@ -891,6 +889,9 @@
           
         bounds_group.addLayer(layer_Friends_6);
             map.addLayer(layer_Friends_6);
+
+        //Replace
+
 
             //Origin
             // Origin_7 Layer
@@ -955,11 +956,17 @@
 
                //Origin
 
+
+
+
         function pop_CityofMeeting_8(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <th scope="row">City of Meeting</th>\
                         <td>' + (feature.properties['City_Collection'] !== null ? autolinker.link(feature.properties['City_Collection'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Year_Meeting'] !== null ? autolinker.link(feature.properties['Year_Meeting'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
@@ -986,7 +993,7 @@
             }
         }
         map.createPane('pane_CityofMeeting_8');
-        map.getPane('pane_CityofMeeting_8').style.zIndex = 600;
+        map.getPane('pane_CityofMeeting_8').style.zIndex = 408;
         map.getPane('pane_CityofMeeting_8').style['mix-blend-mode'] = 'normal';
         var layer_CityofMeeting_8 = new L.geoJson(json_CityofMeeting_8, {
             attribution: '',
@@ -1053,7 +1060,7 @@
         col1.className="col9";
         col1.id = "mapWindow";
         col1.style.height = "99%";
-        col1.style.width = "100%";
+        col1.style.width = "100%"; //Replace to 100
         col1.style.display = "inline-block";
         var col2 = document.createElement('div');
         col2.className="col3";
@@ -1062,7 +1069,9 @@
         mapDiv.parentNode.insertBefore(row, mapDiv);
         document.getElementById("all").appendChild(col1);
         document.getElementById("all").appendChild(col2);
-            col1.appendChild(mapDiv)
+        col1.appendChild(mapDiv)
+
+
 
 
         var Filters = {"Year": "int"};

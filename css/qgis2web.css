@@ -91,10 +91,10 @@
     font: 18px 'Open Sans', Arial, sans-serif;
     text-indent: 1px;
     background-color: rgba(0, 0, 0, 0.0); /* Fully transparent background */
-    width: 30px !important;
+    width: fit-content;
     color: #ffffff !important;
     height: 30px !important;
-    text-align: center !important;
+    text-align: justify !important;
     line-height: 30px !important;
 }
 
