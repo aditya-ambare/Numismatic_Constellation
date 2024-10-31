@@ -725,7 +725,7 @@
                         <td colspan="2"><strong>City of Our Meeting</strong><br />' + (feature.properties['City_Collection'] !== null ? autolinker.link(feature.properties['City_Collection'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2"><strong>Year of Meeting</strong><br />' + (feature.properties['Year'] !== null ? autolinker.link(feature.properties['Year'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2"><strong>Year</strong><br />' + (feature.properties['Year'] !== null ? autolinker.link(feature.properties['Year'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <td colspan="2"><strong>Thank You </strong><br />' + (feature.properties['Person'] !== null ? autolinker.link(feature.properties['Person'].toLocaleString()) : '') + '</td>\
@@ -737,15 +737,14 @@
                         <td colspan="2"><strong>City of the Friend</strong><br />' + (feature.properties['City_Origin'] !== null ? autolinker.link(feature.properties['City_Origin'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['Year_Meeting'] !== null ? autolinker.link(feature.properties['Year_Meeting'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
                         <td colspan="2"><strong>How far did they Travel?</strong><br />' + (feature.properties['Distance_Travelled'] !== null ? autolinker.link(feature.properties['Distance_Travelled'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <td colspan="2"><strong>Their Own Country or Different?</strong><br />' + (feature.properties['Same_OriginAsCoin'] !== null ? autolinker.link(feature.properties['Same_OriginAsCoin'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
+
+
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
 			layer.on('popupopen', function(e) {
 				addClassToPopupIfMedia(content, e.popup);
@@ -992,7 +991,7 @@
             }
         }
         map.createPane('pane_CityofMeeting_8');
-        map.getPane('pane_CityofMeeting_8').style.zIndex = 408;
+        map.getPane('pane_CityofMeeting_8').style.zIndex = 450;
         map.getPane('pane_CityofMeeting_8').style['mix-blend-mode'] = 'normal';
         var layer_CityofMeeting_8 = new L.geoJson(json_CityofMeeting_8, {
             attribution: '',
