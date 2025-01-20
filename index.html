@@ -63,15 +63,28 @@
             /* Slider styling */
             .slider {
                 height: 18px; /* Slider height */
+                width: 600px;
+                margin-left: calc(50% - 300px); /* Moves slider left to center it */
                 margin-bottom: 20px; /* Space below the slider */
             }
             .centered-content {
-                text-align: center; /* Center-align content */
+                text-align: left; /* Center-align content */
+                width: 100%;
             }
             .filterlabel {
-                display: inline-block; /* Ensure block-level element for margin auto to work */
-                margin-bottom: 5px;
+                text-align: left; /* Left-align the text */
+                margin-bottom: 10px; /* Add space below */
                 cursor: pointer;
+                width: 600px; /* Match the width of the slider */
+                margin-left: calc(50% - 300px); /* Align the button with the slider */
+            }
+            /* Reset button styling */
+            .resetfilterlabel {
+                text-align: left; /* Center-align the reset text */
+                margin-top: 5px; /* Add space above the button */
+                cursor: pointer;
+                width: 600px; /* Match the width of the slider */
+                margin-left: calc(50% - 300px); /* Align the button with the slider */
             }
     
             /* Hide default attribution */
@@ -259,138 +272,150 @@
                 });
                 layer.bindPopup(content, { maxHeight: 400 });
             }
-           //replace to remove year of meeting
 
-        // replace
         var pattern_AllCountries_1_0 = new L.StripePattern({
-                weight: 0.5,
-                spaceWeight: 1,
-                color: '#f7fbff',
-                opacity: 0.5,
-                spaceOpacity: 0.5,
-                angle: 360
-            });
-            pattern_AllCountries_1_0.addTo(map);
-            var pattern_AllCountries_1_0 = new L.StripePattern({
-                weight: 0.5,
-                spaceWeight: 1,
-                color: '#d7e6f5',
-                opacity: 0.5,
-                spaceOpacity: 0.5,
-                angle: 360
-            });
-            pattern_AllCountries_1_0.addTo(map);
-            var pattern_AllCountries_1_0 = new L.StripePattern({
-                weight: 0.5,
-                spaceWeight: 1,
-                color: '#afd1e7',
-                opacity: 0.5,
-                spaceOpacity: 0.5,
-                angle: 360
-            });
-            pattern_AllCountries_1_0.addTo(map);
-            var pattern_AllCountries_1_0 = new L.StripePattern({
-                weight: 0.5,
-                spaceWeight: 1,
-                color: '#73b2d8',
-                opacity: 0.5,
-                spaceOpacity: 0.5,
-                angle: 360
-            });
-            pattern_AllCountries_1_0.addTo(map);
-            var pattern_AllCountries_1_0 = new L.StripePattern({
-                weight: 0.5,
-                spaceWeight: 1,
-                color: '#3e8ec4',
-                opacity: 0.5,
-                spaceOpacity: 0.5,
-                angle: 360
-            });
-            pattern_AllCountries_1_0.addTo(map);
-            var pattern_AllCountries_1_0 = new L.StripePattern({
-                weight: 0.5,
-                spaceWeight: 1,
-                color: '#1663aa',
-                opacity: 0.5,
-                spaceOpacity: 0.5,
-                angle: 360
-            });
-            pattern_AllCountries_1_0.addTo(map);
-            var pattern_AllCountries_1_0 = new L.StripePattern({
-                weight: 0.5,
-                spaceWeight: 1,
-                color: '#08306b',
-                opacity: 0.5,
-                spaceOpacity: 0.5,
-                angle: 360
-            });
-            pattern_AllCountries_1_0.addTo(map);
-            var pattern_AllCountries_1_0 = new L.StripePattern({
-                weight: 0.5,
-                spaceWeight: 1,
-                color: '#f7fbff',
-                opacity: 0.5,
-                spaceOpacity: 0.5,
-                angle: 360
-            });
-            pattern_AllCountries_1_0.addTo(map);
-            var pattern_AllCountries_1_0 = new L.StripePattern({
-                weight: 0.5,
-                spaceWeight: 1,
-                color: '#d7e6f5',
-                opacity: 0.5,
-                spaceOpacity: 0.5,
-                angle: 360
-            });
-            pattern_AllCountries_1_0.addTo(map);
-            var pattern_AllCountries_1_0 = new L.StripePattern({
-                weight: 0.5,
-                spaceWeight: 1,
-                color: '#afd1e7',
-                opacity: 0.5,
-                spaceOpacity: 0.5,
-                angle: 360
-            });
-            pattern_AllCountries_1_0.addTo(map);
-            var pattern_AllCountries_1_0 = new L.StripePattern({
-                weight: 0.5,
-                spaceWeight: 1,
-                color: '#73b2d8',
-                opacity: 0.5,
-                spaceOpacity: 0.5,
-                angle: 360
-            });
-            pattern_AllCountries_1_0.addTo(map);
-            var pattern_AllCountries_1_0 = new L.StripePattern({
-                weight: 0.5,
-                spaceWeight: 1,
-                color: '#3e8ec4',
-                opacity: 0.5,
-                spaceOpacity: 0.5,
-                angle: 360
-            });
-            pattern_AllCountries_1_0.addTo(map);
-            var pattern_AllCountries_1_0 = new L.StripePattern({
-                weight: 0.5,
-                spaceWeight: 1,
-                color: '#1663aa',
-                opacity: 0.5,
-                spaceOpacity: 0.5,
-                angle: 360
-            });
-            pattern_AllCountries_1_0.addTo(map);
-            var pattern_AllCountries_1_0 = new L.StripePattern({
-                weight: 0.5,
-                spaceWeight: 1,
-                color: '#08306b',
-                opacity: 0.5,
-                spaceOpacity: 0.5,
-                angle: 360
-            });
-
-        //replace
-
-
+            weight: 0.25,
+            spaceWeight: 1,
+            color: '#f7fbff',
+            opacity: 0.5,
+            spaceOpacity: 0.5,
+            angle: 360
+        });
+        pattern_AllCountries_1_0.addTo(map);
+        var pattern_AllCountries_1_0 = new L.StripePattern({
+            weight: 0.25,
+            spaceWeight: 1,
+            color: '#dce9f6',
+            opacity: 0.5,
+            spaceOpacity: 0.5,
+            angle: 360
+        });
+        pattern_AllCountries_1_0.addTo(map);
+        var pattern_AllCountries_1_0 = new L.StripePattern({
+            weight: 0.25,
+            spaceWeight: 1,
+            color: '#bed8ec',
+            opacity:0.5,
+            spaceOpacity: 0.5,
+            angle: 360
+        });
+        pattern_AllCountries_1_0.addTo(map);
+        var pattern_AllCountries_1_0 = new L.StripePattern({
+            weight: 0.25,
+            spaceWeight: 1,
+            color: '#8fc2de',
+            opacity: 0.5,
+            spaceOpacity: 0.5,
+            angle: 360
+        });
+        pattern_AllCountries_1_0.addTo(map);
+        var pattern_AllCountries_1_0 = new L.StripePattern({
+            weight: 0.25,
+            spaceWeight: 1,
+            color: '#5ba3d0',
+            opacity: 0.5,
+            spaceOpacity: 0.5,
+            angle: 360
+        });
+        pattern_AllCountries_1_0.addTo(map);
+        var pattern_AllCountries_1_0 = new L.StripePattern({
+            weight: 0.25,
+            spaceWeight: 1,
+            color: '#3282be',
+            opacity: 0.5,
+            spaceOpacity: 0.5,
+            angle: 360
+        });
+        pattern_AllCountries_1_0.addTo(map);
+        var pattern_AllCountries_1_0 = new L.StripePattern({
+            weight: 0.25,
+            spaceWeight: 1.0,
+            color: '#115ca5',
+            opacity: 0.5,
+            spaceOpacity: 0.5,
+            angle: 360
+        });
+        pattern_AllCountries_1_0.addTo(map);
+        var pattern_AllCountries_1_0 = new L.StripePattern({
+            weight: 0.25,
+            spaceWeight: 1.0,
+            color: '#08306b',
+            opacity: 0.5,
+            spaceOpacity: 0.5,
+            angle: 360
+        });
+        pattern_AllCountries_1_0.addTo(map);
+        var pattern_AllCountries_1_0 = new L.StripePattern({
+            weight: 0.25,
+            spaceWeight: 1.0,
+            color: '#f7fbff',
+            opacity: 0.5,
+            spaceOpacity: 0.5,
+            angle: 360
+        });
+        pattern_AllCountries_1_0.addTo(map);
+        var pattern_AllCountries_1_0 = new L.StripePattern({
+            weight: 0.25,
+            spaceWeight: 1.0,
+            color: '#dce9f6',
+            opacity: 0.5,
+            spaceOpacity: 0.5,
+            angle: 360
+        });
+        pattern_AllCountries_1_0.addTo(map);
+        var pattern_AllCountries_1_0 = new L.StripePattern({
+            weight: 0.25,
+            spaceWeight: 1.0,
+            color: '#bed8ec',
+            opacity: 0.5,
+            spaceOpacity: 0.5,
+            angle: 360
+        });
+        pattern_AllCountries_1_0.addTo(map);
+        var pattern_AllCountries_1_0 = new L.StripePattern({
+            weight: 0.25,
+            spaceWeight: 1.0,
+            color: '#8fc2de',
+            opacity: 0.5,
+            spaceOpacity: 0.5,
+            angle: 360
+        });
+        pattern_AllCountries_1_0.addTo(map);
+        var pattern_AllCountries_1_0 = new L.StripePattern({
+            weight: 0.25,
+            spaceWeight: 1.0,
+            color: '#5ba3d0',
+            opacity: 0.5,
+            spaceOpacity: 0.5,
+            angle: 360
+        });
+        pattern_AllCountries_1_0.addTo(map);
+        var pattern_AllCountries_1_0 = new L.StripePattern({
+            weight: 0.25,
+            spaceWeight: 1.0,
+            color: '#3282be',
+            opacity: 0.5,
+            spaceOpacity: 0.5,
+            angle: 360
+        });
+        pattern_AllCountries_1_0.addTo(map);
+        var pattern_AllCountries_1_0 = new L.StripePattern({
+            weight: 0.25,
+            spaceWeight: 1.0,
+            color: '#115ca5',
+            opacity: 0.5,
+            spaceOpacity: 0.5,
+            angle: 360
+        });
+        pattern_AllCountries_1_0.addTo(map);
+        var pattern_AllCountries_1_0 = new L.StripePattern({
+            weight: 0.25,
+            spaceWeight: 1.0,
+            color: '#08306b',
+            opacity: 0.5,
+            spaceOpacity: 0.5,
+            angle: 360
+        });
         pattern_AllCountries_1_0.addTo(map);
         function style_AllCountries_1_0(feature) {
             switch(String(feature.properties['Year'])) {
@@ -448,7 +473,16 @@
                 interactive: true,
             }
                     break;
-                default:
+                case '2025':
+                    return {
+                pane: 'pane_AllCountries_1',
+                stroke: false,
+                fillOpacity: 1,
+                fillPattern: pattern_AllCountries_1_0,
+                interactive: true,
+            }
+                    break;
+                case 'NULL':
                     return {
                 pane: 'pane_AllCountries_1',
                 stroke: false,
@@ -478,7 +512,7 @@
                     return {
                 pane: 'pane_AllCountries_1',
                 opacity: 1,
-                color: 'rgba(215,230,245,1.0)',
+                color: 'rgba(220,233,246,1.0)',
                 dashArray: '',
                 lineCap: 'square',
                 lineJoin: 'bevel',
@@ -491,7 +525,7 @@
                     return {
                 pane: 'pane_AllCountries_1',
                 opacity: 1,
-                color: 'rgba(175,209,231,1.0)',
+                color: 'rgba(190,216,236,1.0)',
                 dashArray: '',
                 lineCap: 'square',
                 lineJoin: 'bevel',
@@ -504,7 +538,7 @@
                     return {
                 pane: 'pane_AllCountries_1',
                 opacity: 1,
-                color: 'rgba(115,178,216,1.0)',
+                color: 'rgba(143,194,222,1.0)',
                 dashArray: '',
                 lineCap: 'square',
                 lineJoin: 'bevel',
@@ -517,7 +551,7 @@
                     return {
                 pane: 'pane_AllCountries_1',
                 opacity: 1,
-                color: 'rgba(62,142,196,1.0)',
+                color: 'rgba(91,163,208,1.0)',
                 dashArray: '',
                 lineCap: 'square',
                 lineJoin: 'bevel',
@@ -530,7 +564,7 @@
                     return {
                 pane: 'pane_AllCountries_1',
                 opacity: 1,
-                color: 'rgba(22,99,170,1.0)',
+                color: 'rgba(50,130,190,1.0)',
                 dashArray: '',
                 lineCap: 'square',
                 lineJoin: 'bevel',
@@ -539,7 +573,20 @@
                 interactive: true,
             }
                     break;
-                default:
+                case '2025':
+                    return {
+                pane: 'pane_AllCountries_1',
+                opacity: 1,
+                color: 'rgba(17,92,165,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'NULL':
                     return {
                 pane: 'pane_AllCountries_1',
                 opacity: 1,
@@ -554,6 +601,9 @@
                     break;
             }
         }
+           //replace to remove year of meeting
+
+
         map.createPane('pane_AllCountries_1');
         map.getPane('pane_AllCountries_1').style.zIndex = 401;
         map.getPane('pane_AllCountries_1').style['mix-blend-mode'] = 'normal';
@@ -1029,7 +1079,8 @@
             {label: '<img src="legend/PathtakenbytheCoins_4.png" /> Path taken by the Coins', layer: layer_PathtakenbytheCoins_4},
             {label: '<img src="legend/TheNetwork_3.png" /> The Network', layer: layer_TheNetwork_3},
             {label: '<img src="legend/G_2.png" /> G', layer: layer_G_2},
-            {label: 'All Countries <br /><table><tr><td style="text-align: center;"><img src="legend/AllCountries_1_20190.png" /></td><td>2019</td></tr><tr><td style="text-align: center;"><img src="legend/AllCountries_1_20201.png" /></td><td>2020</td></tr><tr><td style="text-align: center;"><img src="legend/AllCountries_1_20212.png" /></td><td>2021</td></tr><tr><td style="text-align: center;"><img src="legend/AllCountries_1_20223.png" /></td><td>2022</td></tr><tr><td style="text-align: center;"><img src="legend/AllCountries_1_20234.png" /></td><td>2023</td></tr><tr><td style="text-align: center;"><img src="legend/AllCountries_1_20245.png" /></td><td>2024</td></tr><tr><td style="text-align: center;"><img src="legend/AllCountries_1_6.png" /></td><td></td></tr></table>', layer: layer_AllCountries_1},
+            {label: 'All Countries <br /><table><tr><td style="text-align: center;"><img src="legend/AllCountries_1_20190.png" /></td><td>2019</td></tr><tr><td style="text-align: center;"><img src="legend/AllCountries_1_20201.png" /></td><td>2020</td></tr><tr><td style="text-align: center;"><img src="legend/AllCountries_1_20212.png" /></td><td>2021</td></tr><tr><td style="text-align: center;"><img src="legend/AllCountries_1_20223.png" /></td><td>2022</td></tr><tr><td style="text-align: center;"><img src="legend/AllCountries_1_20234.png" /></td><td>2023</td></tr><tr><td style="text-align: center;"><img src="legend/AllCountries_1_20245.png" /></td><td>2024</td></tr><tr><td style="text-align: center;"><img src="legend/AllCountries_1_20256.png" /></td><td>2025</td></tr></table>', layer: layer_AllCountries_1},
+            // remove the last label for removing nulls
             {label: "World", layer: layer_World_0},]
         var lay = L.control.layers.tree(null, overlaysTree,{
             //namedToggle: true,
@@ -1172,7 +1223,7 @@
             lab_Year.innerHTML  = 'Year: <span id="val_Year"></span>';
             lab_Year.className = 'filterlabel';
             document.getElementById("menu").appendChild(lab_Year);
-            var reset_Year = document.createElement('div');
+            /*var reset_Year = document.createElement('div');
             reset_Year.innerHTML = 'clear filter';
             reset_Year.className = 'filterlabel';
             lab_Year.className = 'filterlabel';
@@ -1180,17 +1231,18 @@
                 sel_Year.noUiSlider.reset();
             };
             document.getElementById("menu").appendChild(reset_Year);
+            */
             var sel_Year = document.getElementById('div_Year');
             noUiSlider.create(sel_Year, {
                 connect: true,
-                start: [2019, 2024],
+                start: [2019, 2025],
                 step: 1,
                 format: wNumb({
                     decimals: 0,
                     }),
                 range: {
                 min: 2019,
-                max: 2024
+                max: 2025
                 }
             });
             sel_Year.noUiSlider.on('update', function (values) {

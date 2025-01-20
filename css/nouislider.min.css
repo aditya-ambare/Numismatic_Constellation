@@ -1,5 +1,6 @@
 /*! nouislider - 14.0.2 - 6/28/2019 */
-.noUi-target,
+
+.noUi-target, 
 .noUi-target * {
     -webkit-touch-callout: none;
     -webkit-tap-highlight-color: transparent;
@@ -16,17 +17,9 @@
 .noUi-target {
     position: relative;
     direction: ltr;
-    font-family: 'Open Sans', Arial, sans-serif; /* Updated font */
-    font-size: 20px; /* Updated font size */
-    color: rgba(0, 191, 255, 0.5); /* Updated text color */
-    background: rgba(0, 191, 255, 0.2); /* Updated background color */
-    width: 100%; /* Adjust the slider width */
-    height: 10px; /* Adjust the height of the slider */
-    left: 50%; /* Center the slider horizontally */
-    transform: translateX(-50%); /* Center the slider horizontally */
 }
 
-.noUi-base,
+.noUi-base, 
 .noUi-connects {
     width: 100%;
     height: 100%;
@@ -37,14 +30,9 @@
 .noUi-connects {
     overflow: hidden;
     z-index: 0;
-    border: 2px solid white; /* Updated slider path border color */
-    background: none; /* Remove background color */
 }
 
-.noUi-connect {
-    background: rgba(0, 191, 255, 0.5); /* Slider Colour */
-}
-
+.noUi-connect, 
 .noUi-origin {
     will-change: transform;
     position: absolute;
@@ -85,34 +73,7 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-origin {
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     position: absolute;
-    border-radius: 25%; /* Make handle circular */
-    background: rgba(0, 0, 0, 1); /* Updated handle fill color */
-    border: 2px solid deepskyblue; /* Updated handle border color */
-    width: 30px; /* Updated handle size */
-    height: 30px; /* Updated handle size */
-    bottom: -25px; /* Adjust position below the slider */
-    left: 0%; /* Center horizontally */
-    transform: translateX(-50%); /* Center horizontally */
-    cursor: pointer; /* Updated cursor */
-    text-align: right; /* Center text within handle */
 }
-
-    .noUi-handle .noUi-tooltip {
-        display: block;
-        position: absolute;
-        border: 1px solid #D9D9D9;
-        border-radius: 3px;
-        background: #fff;
-        color: #000;
-        padding: 5px;
-        text-align: center;
-        white-space: nowrap;
-        font-family: 'Open Sans', Arial, sans-serif; /* Updated font */
-        font-size: 12px; /* Updated font size */
-        bottom: 100%;
-        left: 50%;
-        transform: translateX(-50%);
-    }
 
 .noUi-touch-area {
     height: 100%;
@@ -130,27 +91,47 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-origin {
 }
 
 .noUi-horizontal {
-    height: 5px;
+    height: 18px;
 }
 
-    .noUi-horizontal .noUi-handle {
-        left: -7px; /* Center handle horizontally */
-    }
+.noUi-horizontal .noUi-handle {
+    width: 34px;
+    height: 28px;
+    left: -17px;
+    top: -6px;
+}
 
 .noUi-vertical {
     width: 18px;
 }
 
-    .noUi-vertical .noUi-handle {
-        width: 30px; /* Updated handle size */
-        height: 14px; /* Updated handle size */
-        left: -7px; /* Center handle horizontally */
-        top: -7px; /* Center handle vertically */
-    }
+.noUi-vertical .noUi-handle {
+    width: 28px;
+    height: 34px;
+    left: -6px;
+    top: -17px;
+}
 
 html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
-    right: -7px; /* Center handle horizontally */
+    right: -17px;
     left: auto;
+}
+
+.noUi-target {
+    background: #13293d;
+    border-radius: 4px;
+    border: 2px solid #D3D3D3;
+    box-shadow: inset 0 1px 1px #F0F0F0, 0 3px 6px -5px #BBB;
+    
+}
+
+.noUi-connects {
+    border-radius: 3px;
+}
+
+.noUi-connect {
+    background: rgb(5, 98, 129);
+    border: 2px solid rgb(0, 106, 255);
 }
 
 .noUi-draggable {
@@ -161,10 +142,49 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
     cursor: ns-resize;
 }
 
+.noUi-handle {
+    border: 3px solid deepskyblue;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 1);
+    cursor: default;
+    box-shadow: none;
+}
+
+.noUi-handle.noUi-origin {
+    background: #000;
+    border: 2px solid #FFF;
+}
+
+.noUi-active {
+    box-shadow: none;
+}
+/*
 .noUi-handle:after,
 .noUi-handle:before {
     content: "";
-    display: none; /* Remove inner lines */
+    display: block;
+    position: absolute;
+    height: 14px;
+    width: 1px;
+    background: #E8E7E6;
+    left: 14px;
+    top: 6px;
+}
+
+.noUi-handle:after {
+    left: 17px;
+}*/
+
+.noUi-vertical .noUi-handle:after,
+.noUi-vertical .noUi-handle:before {
+    width: 14px;
+    height: 1px;
+    left: 6px;
+    top: 14px;
+}
+
+.noUi-vertical .noUi-handle:after {
+    top: 17px;
 }
 
 [disabled] .noUi-connect {
@@ -185,18 +205,13 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
 
 .noUi-pips {
     position: absolute;
-    color: #fff; /* Updated text color */
-    font-family: 'Open Sans', Arial, sans-serif; /* Updated font */
-    font-size: 12px; /* Updated font size */
+    color: #999;
 }
 
 .noUi-value {
     position: absolute;
     white-space: nowrap;
     text-align: center;
-    font-family: 'Open Sans', Arial, sans-serif; /* Updated font */
-    font-size: 12px; /* Updated font size */
-    color: #fff; /* Updated text color */
 }
 
 .noUi-value-sub {
@@ -260,9 +275,6 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
     -webkit-transform: translate(0, -50%);
     transform: translate(0, -50%);
     padding-left: 25px;
-    font-family: 'Open Sans', Arial, sans-serif; /* Updated font */
-    font-size: 12px; /* Updated font size */
-    color: #fff; /* Updated text color */
 }
 
 .noUi-rtl .noUi-value-vertical {
@@ -294,8 +306,6 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
     padding: 5px;
     text-align: center;
     white-space: nowrap;
-    font-family: 'Open Sans', Arial, sans-serif; /* Updated font */
-    font-size: 12px; /* Updated font size */
 }
 
 .noUi-horizontal .noUi-tooltip {
