@@ -1021,7 +1021,7 @@
 			layer.on('popupopen', function(e) {
 				addClassToPopupIfMedia(content, e.popup);
 			});
-			layer.bindPopup(content, { maxHeight: 400 });
+			layer.bindPopup(content, { maxHeight: 1200 });
         }
 
         function style_CityofMeeting_8_0() {
@@ -1041,7 +1041,7 @@
             }
         }
         map.createPane('pane_CityofMeeting_8');
-        map.getPane('pane_CityofMeeting_8').style.zIndex = 450;
+        map.getPane('pane_CityofMeeting_8').style.zIndex = 750;
         map.getPane('pane_CityofMeeting_8').style['mix-blend-mode'] = 'normal';
         var layer_CityofMeeting_8 = new L.geoJson(json_CityofMeeting_8, {
             attribution: '',
