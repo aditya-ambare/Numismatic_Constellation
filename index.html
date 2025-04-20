@@ -642,7 +642,7 @@
             }
 
             map.createPane('pane_G_2');
-            map.getPane('pane_G_2').style.zIndex = 402;
+            map.getPane('pane_G_2').style.zIndex = 800;
             map.getPane('pane_G_2').style['mix-blend-mode'] = 'normal';
 
             var layer_G_2 = new L.geoJson(json_G_2, {
@@ -691,7 +691,7 @@
 			layer.on('popupopen', function(e) {
 				addClassToPopupIfMedia(content, e.popup);
 			});
-			layer.bindPopup(content, { maxHeight: 400 });
+			layer.bindPopup(content, { maxHeight: 800 });
         }
 
         //Replace
