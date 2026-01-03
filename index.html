@@ -358,10 +358,14 @@
                 '<th scope="row">Year</th>' +
                 '<td>' + (feature.properties["Year"] || '') + '</td>' +
                 '</tr>' +
-                // Replace to make articles clickable
+                // Article row with clickable link
                 '<tr>' +
                 '<th scope="row">Article</th>' +
-                '<td>' + (feature.properties["Article"] ? '<a href="' + feature.properties["Article"] + '" target="_blank">' + feature.properties["Article"] + '</a>' : '') + '</td>' +
+                '<td>' +
+                (feature.properties["Article"]
+                    ? '<a href="' + feature.properties["Article"] + '" target="_blank">' + feature.properties["Article"] + '</a>'
+                    : '') +
+                '</td>' +
                 '</tr>' +
 
 
@@ -612,12 +616,11 @@
                     <tr>
                         <td colspan="2" style="text-align:center;">
                             <div style="display:flex; gap:8px; justify-content:center;">
-                                ${feature.properties['Side_1'] ? `<a href="${feature.properties['Side_1']}" target="_blank"><img src="${feature.properties['Side_1']}" style="width:120px; height:auto; border-radius:4px;"></a>` : ''}
-                                ${feature.properties['Side_2'] ? `<a href="${feature.properties['Side_2']}" target="_blank"><img src="${feature.properties['Side_2']}" style="width:120px; height:auto; border-radius:4px;"></a>` : ''}
+                                ${feature.properties['Side_1'] ? `<a href="${feature.properties['Side_1']}" target="_blank" title="Side 1"><img src="${feature.properties['Side_1']}" style="width:120px; height:auto; border-radius:4px;"></a>` : ''}
+                                ${feature.properties['Side_2'] ? `<a href="${feature.properties['Side_2']}" target="_blank" title="Side 2"><img src="${feature.properties['Side_2']}" style="width:120px; height:auto; border-radius:4px;"></a>` : ''}
                             </div>
                         </td>
                     </tr>
-                    <tr>
 
                     <tr>
                         <th scope="row">Thank You</th>
@@ -631,7 +634,7 @@
 
                     <tr>
                         <th scope="row">City of Our Meeting</th>
-                        <td id="City_Collection">${feature.properties['City_Collection'] || ''}</td>
+                        <td>${feature.properties['City_Collection'] || ''}</td>
                     </tr>
 
                     <tr>
@@ -639,11 +642,12 @@
                         <td>${feature.properties['Year'] || ''}</td>
                     </tr>
 
-                    '<tr>' +
-                    '<th scope="row">Article</th>' +
-                    '<td>' + (feature.properties["Article"] ? '<a href="' + feature.properties["Article"] + '" target="_blank">' + feature.properties["Article"] + '</a>' : '') + '</td>' +
-                    '</tr>' +
-
+                    <tr>
+                        <th scope="row">Article</th>
+                        <td>
+                            ${feature.properties['Article'] ? `<a href="${feature.properties['Article']}" target="_blank">${feature.properties['Article']}</a>` : ''}
+                        </td>
+                    </tr>
 
                     <tr>
                         <th scope="row">Country of the Friend</th>
@@ -657,21 +661,22 @@
 
                     <tr>
                         <th scope="row">Year Meeting</th>
-                        <td id="Year_Meeting">${feature.properties['Year_Meeting'] || ''}</td>
+                        <td>${feature.properties['Year_Meeting'] || ''}</td>
                     </tr>
 
                     <tr>
                         <th scope="row">How far did they Travel?</th>
-                        <td id="Distance_Travelled">${feature.properties['Distance_Travelled'] || ''}</td>
+                        <td>${feature.properties['Distance_Travelled'] || ''}</td>
                     </tr>
 
                     <tr>
                         <th scope="row">Their Own Country or Different?</th>
-                        <td id="Same_OriginAsCoin">${feature.properties['Same_OriginAsCoin'] || ''}</td>
+                        <td>${feature.properties['Same_OriginAsCoin'] || ''}</td>
                     </tr>
 
                 </table>
                 `;
+
 
 
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
