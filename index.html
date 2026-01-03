@@ -1,185 +1,247 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
-        <meta name="mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <link rel="stylesheet" href="css/leaflet.css">
-        <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
-        <link rel="stylesheet" href="css/qgis2web.css">
-        <link rel="stylesheet" href="css/fontawesome-all.min.css">
-        <link rel="stylesheet" href="css/leaflet-search.css">
-        <link rel="stylesheet" href="css/filter.css">
-        <link rel="stylesheet" href="css/nouislider.min.css">
-        <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
-        <link rel="stylesheet" href="css/leaflet-measure.css">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="css/leaflet.css">
+    <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
+    <link rel="stylesheet" href="css/qgis2web.css">
+    <link rel="stylesheet" href="css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="css/leaflet-search.css">
+    <link rel="stylesheet" href="css/filter.css">
+    <link rel="stylesheet" href="css/nouislider.min.css">
+    <link rel="stylesheet" href="css/leaflet.photon.css">
+    <!-- Link to Google Fonts for Open Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
 
-        <!-- Link to Google Fonts for Open Sans -->
-        <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
-       
-        <style>
-            /* Additional styles */
-            html, body, #map {
-                width: 100%;
-                height: 100%;
-                padding: 0;
-                margin: 0;
-                font-family: 'Open Sans', Arial, sans-serif; /* Apply Open Sans as the default font */
-                font-weight: 300;
-            }
-    
-            /* Existing styles */
-            html, body {
-                width: 100%;
-                height: 100%;
-                margin: 0;
-                padding: 0;
-                overflow: hidden; /* Prevent scrollbars */
-            }
-    
-            #map {
-                width: 100%;
-                height: 100%;
-                position: relative;
-            }
-    
-            /* Adjustments for menu positioning */
-            #menu {
-                position: absolute;
-                bottom: 10px;
-                left: 50%;
-                transform: translateX(-50%);
-                z-index: 1000;
-                background-color: rgba(0, 0, 0, 0.5); /* Sliderbackground */
-                padding: 10px;
-                border-radius: 5px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                color: white; /* Updated text color to white */
-                font-size: 16px; /* Updated font size */
-            }
-    
-            /* Slider styling */
-            .slider {
-                height: 18px; /* Slider height */
-                width: 600px;
-                margin-left: calc(50% - 300px); /* Moves slider left to center it */
-                margin-bottom: 20px; /* Space below the slider */
-            }
-            .centered-content {
-                text-align: left; /* Center-align content */
-                width: 100%;
-            }
-            .filterlabel {
-                text-align: left; /* Left-align the text */
-                margin-bottom: 10px; /* Add space below */
-                cursor: pointer;
-                width: 600px; /* Match the width of the slider */
-                margin-left: calc(50% - 300px); /* Align the button with the slider */
-            }
-            /* Reset button styling */
-            .resetfilterlabel {
-                text-align: left; /* Center-align the reset text */
-                margin-top: 5px; /* Add space above the button */
-                cursor: pointer;
-                width: 600px; /* Match the width of the slider */
-                margin-left: calc(50% - 300px); /* Align the button with the slider */
-            }
-    
-            /* Hide default attribution */
-            .leaflet-bottom.leaflet-right {
-                display: none;
-            }
-    
-            /* Custom attribution positioning */
-            .leaflet-bottom {
-                position: absolute;
-                bottom: 10px; /* Adjust as needed */
-                left: 10px; /* Adjust as needed */
-                z-index: 1000;
-                background-color: rgba(255, 255, 255, 0.8);
-                padding: 5px 10px;
-                border-radius: 5px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            }
-        </style>
+    <style>
+        /* Additional styles */
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            font-family: 'Open Sans', Arial, sans-serif; /* Apply Open Sans as the default font */
+            font-weight: 300;
+        }
 
-        <title>The Numismatic Constellation</title>
-    </head>
-    <body>
-        <div id="map">
-        </div>
-        <script src="js/qgis2web_expressions.js"></script>
-        <script src="js/leaflet.js"></script>
-        <script src="js/L.Control.Layers.Tree.min.js"></script>
-        <script src="js/multi-style-layer.js"></script>
-        <script src="js/leaflet-svg-shape-markers.min.js"></script>
-        <script src="js/leaflet.rotatedMarker.js"></script>
-        <script src="js/leaflet.pattern.js"></script>
-        <script src="js/leaflet-hash.js"></script>
-        <script src="js/Autolinker.min.js"></script>
-        <script src="js/rbush.min.js"></script>
-        <script src="js/labelgun.min.js"></script>
-        <script src="js/labels.js"></script>
-        <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
-        <script src="js/leaflet-measure.js"></script>
-        <script src="js/leaflet-search.js"></script>
-        <script src="js/tailDT.js"></script>
-<script src="js/nouislider.min.js"></script>
-<script src="js/wNumb.js"></script>
-        <script src="data/AllCountries_1.js"></script>
-        <script src="data/G_2.js"></script>
-        <script src="data/TheNetwork_3.js"></script>
-        <script src="data/PathtakenbytheCoins_4.js"></script>
-        <script src="data/CountriesofTheCoins_5.js"></script>
-        <script src="data/Friends_6.js"></script>
-        <script src="data/Origin_7.js"></script>
-        <script src="data/CityofMeeting_8.js"></script>
-        <script>
+        /* Existing styles */
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Prevent scrollbars */
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        /* Adjustments for menu positioning */
+        #menu {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 600px; /* 🔑 MATCH slider width */
+            background-color: rgba(0, 0, 0, 0.0);
+            padding: 10px;
+            border-radius: 5px;
+            box-sizing: border-box; /* 🔑 prevents overflow */
+            color: white;
+            font-size: 16px;
+        }
 
 
+        /* Slider styling */
+        .slider {
+            height: 18px; /* Slider height */
+            width: 600px;
+            
+            margin-bottom: 20px; /* Space below the slider */
+        }
 
-            var map = L.map('map', {
-                zoomControl: false, maxZoom: 25, minZoom: 1 /* COPY ALL THIS */
-            }).fitBounds([[-120, -100], [120, 80]]);  /* COPY ALL THIS */
-            //var hash = new L.Hash(map); /* comment this to stop auto restore of map */
+        .centered-content {
+            text-align: left; /* Center-align content */
+            width: 100%;
+        }
 
-            // Set the default view at the very end
-            map.setView([30, 0], 2 ); // Default view with center coordinates and zoom level
+        .filterlabel {
+            text-align: left; /* Left-align the text */
+            margin-bottom: 10px; /* Add space below */
+            cursor: pointer;
+            width: 600px; /* Match the width of the slider */
+            margin-left: calc(50% - 300px); /* Align the button with the slider */
+        }
+        /* Reset button styling */
+        .resetfilterlabel {
+            text-align: left; /* Center-align the reset text */
+            margin-top: 5px; /* Add space above the button */
+            cursor: pointer;
+            width: 600px; /* Match the width of the slider */
+            margin-left: calc(50% - 300px); /* Align the button with the slider */
+        }
+
+        /* Hide default attribution */
+        .leaflet-bottom.leaflet-right {
+            display: none;
+        }
+
+        /* Custom attribution positioning */
+        .leaflet-bottom {
+            position: absolute;
+            bottom: 10px; /* Adjust as needed */
+            left: 10px; /* Adjust as needed */
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 5px 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+
+    <title>The Numismatic Constellation</title>
+</head>
+<body>
+    <div id="map"></div>
+    <div id="menu"></div> // Edit it
+    <script src="js/qgis2web_expressions.js"></script>
+    <script src="js/leaflet.js"></script>
+    <script src="js/L.Control.Layers.Tree.min.js"></script>
+    <script src="js/multi-style-layer.js"></script>
+    <script src="js/leaflet-svg-shape-markers.min.js"></script>
+    <script src="js/leaflet.rotatedMarker.js"></script>
+    <script src="js/leaflet.pattern.js"></script>
+    <script src="js/leaflet-hash.js"></script>
+    <script src="js/Autolinker.min.js"></script>
+    <script src="js/rbush.min.js"></script>
+    <script src="js/labelgun.min.js"></script>
+    <script src="js/labels.js"></script>
+    <script src="js/leaflet.photon.js"></script>
+    <script src="js/leaflet-search.js"></script>
+    <script src="js/tailDT.js"></script>
+    <script src="js/nouislider.min.js"></script>
+    <script src="js/wNumb.js"></script>
+    <script src="data/AllCountries_1.js"></script>
+    <script src="data/PathtakenbytheCoins_2.js"></script>
+    <script src="data/CountriesofTheCoins_3.js"></script>
+    <script src="data/Friends_4.js"></script>
+    <script src="data/CityofMeeting_5.js"></script>
+    <script src="data/G_6.js"></script>
+    <script src="data/Origin_7.js"></script>
+    <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            var layer = e.target;
+
+            if (
+                layer.feature.geometry.type === 'LineString' ||
+                layer.feature.geometry.type === 'MultiLineString'
+            ) {
+                layer.setStyle({
+                    color: 'rgba(255, 0, 0, 0.7)',   // transparent red line
+                    weight: 3
+                });
+            } else {
+                layer.setStyle({
+                    fillColor: 'rgba(255, 0, 0, 0.4)', // transparent red fill
+                    fillOpacity: 0.4,
+                    color: 'rgba(255, 0, 0, 0.8)',     // border
+                    weight: 1
+                });
+            }
+
+            if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+                layer.bringToFront();
+            }
+        }
+
+
+
+        // Zoom in
+        var map = L.map('map', {
+            zoomControl: false, maxZoom: 25, minZoom: 1 /* COPY ALL THIS */
+        }).fitBounds([[-120, -100], [120, 80]]);  /* COPY ALL THIS */
+        //var hash = new L.Hash(map); /* comment this to stop auto restore of map */
+
+        // Set the default view at the very end
+        map.setView([30, 0], 2); // Default view with center coordinates and zoom level
+
+
+
 
 
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
-        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var autolinker = new Autolinker({ truncate: { length: 30, location: 'smart' } });
         // remove popup's row if "visible-with-data"
         function removeEmptyRowsFromPopupContent(content, feature) {
-         var tempDiv = document.createElement('div');
-         tempDiv.innerHTML = content;
-         var rows = tempDiv.querySelectorAll('tr');
-         for (var i = 0; i < rows.length; i++) {
-             var td = rows[i].querySelector('td.visible-with-data');
-             var key = td ? td.id : '';
-             if (td && td.classList.contains('visible-with-data') && feature.properties[key] == null) {
-                 rows[i].parentNode.removeChild(rows[i]);
-             }
-         }
-         return tempDiv.innerHTML;
+            var tempDiv = document.createElement('div');
+            tempDiv.innerHTML = content;
+            var rows = tempDiv.querySelectorAll('tr');
+            for (var i = 0; i < rows.length; i++) {
+                var td = rows[i].querySelector('td.visible-with-data');
+                var key = td ? td.id : '';
+                if (td && td.classList.contains('visible-with-data') && feature.properties[key] == null) {
+                    rows[i].parentNode.removeChild(rows[i]);
+                }
+            }
+            return tempDiv.innerHTML;
         }
-        // add class to format popup if it contains media
-		function addClassToPopupIfMedia(content, popup) {
-			var tempDiv = document.createElement('div');
-			tempDiv.innerHTML = content;
-			if (tempDiv.querySelector('td img')) {
-				popup._contentNode.classList.add('media');
-					// Delay to force the redraw
-					setTimeout(function() {
-						popup.update();
-					}, 10);
-			} else {
-				popup._contentNode.classList.remove('media');
-			}
-		}
-        var title = new L.Control({'position':'topleft'});
+        // modify popup if contains media
+        function addClassToPopupIfMedia(content, popup) {
+            var tempDiv = document.createElement('div');
+            tempDiv.innerHTML = content;
+            var imgTd = tempDiv.querySelector('td img');
+            if (imgTd) {
+                var src = imgTd.getAttribute('src');
+                if (/\.(jpg|jpeg|png|gif|bmp|webp|avif)$/i.test(src)) {
+                    popup._contentNode.classList.add('media');
+                    setTimeout(function () {
+                        popup.update();
+                    }, 10);
+                } else if (/\.(mp3|wav|ogg|aac)$/i.test(src)) {
+                    var audio = document.createElement('audio');
+                    audio.controls = true;
+                    audio.src = src;
+                    imgTd.parentNode.replaceChild(audio, imgTd);
+                    popup._contentNode.classList.add('media');
+                    setTimeout(function () {
+                        popup.setContent(tempDiv.innerHTML);
+                        popup.update();
+                    }, 10);
+                } else if (/\.(mp4|webm|ogg|mov)$/i.test(src)) {
+                    var video = document.createElement('video');
+                    video.controls = true;
+                    video.src = src;
+                    video.style.width = "400px";
+                    video.style.height = "300px";
+                    video.style.maxHeight = "60vh";
+                    video.style.maxWidth = "60vw";
+                    imgTd.parentNode.replaceChild(video, imgTd);
+                    popup._contentNode.classList.add('media');
+                    // Aggiorna il popup quando il video carica i metadati
+                    video.addEventListener('loadedmetadata', function () {
+                        popup.update();
+                    });
+                    setTimeout(function () {
+                        popup.setContent(tempDiv.innerHTML);
+                        popup.update();
+                    }, 10);
+                } else {
+                    popup._contentNode.classList.remove('media');
+                }
+            } else {
+                popup._contentNode.classList.remove('media');
+            }
+        }
+        var title = new L.Control({ 'position': 'topleft' });
         title.onAdd = function (map) {
             this._div = L.DomUtil.create('div', 'info');
             this.update();
@@ -190,59 +252,48 @@
         };
         title.addTo(map);
 
-        // Static Abstract
+        //Static Abstract
 
-        var abstract = new L.Control({'position':'topleft'});
+        var abstract = new L.Control({ 'position': 'topleft' });
         abstract.onAdd = function (map) {
             this._div = L.DomUtil.create('div',
-            'leaflet-control abstract');
+                'leaflet-control abstract');
             this._div.id = 'abstract'
 
-                abstract.show();
-                return this._div;
-            };
-        
-            // Static Abstract
+            abstract.show();
+            return this._div;
+        };
+
+        // Static Abstract
 
 
-            abstract.show = function () {
-                this._div.classList.remove("abstract");
-                this._div.classList.add("abstractUncollapsed");
-                this._div.innerHTML = 'Since the winter of 2019 in Barcelona,' +
-                    ' this serendipitous journey has been a joy ' +
-                    'as I cross paths with amazing individuals with incredible stories. <br />' +
-                    'I am extremely grateful to you for indulging in my request. <br />' +
-                    'I am intrigued to see how this lifelong project matures over the ' +
-                    'open - ended timeline. <br />' +
-                    'Lastly, Linara—thank you for your eternal patience. <br />' +
-                    '2024-06-21';
-            };
+        abstract.show = function () {
+            this._div.classList.remove("abstract");
+            this._div.classList.add("abstractUncollapsed");
+            this._div.innerHTML = 'Since the winter of 2019 in Barcelona,' +
+                ' this serendipitous journey has been a joy ' +
+                'as I cross paths with amazing individuals with incredible stories. <br />' +
+                'I am extremely grateful to you for indulging in my request. <br />' +
+                'I am intrigued to see how this lifelong project matures over the ' +
+                'open - ended timeline. <br />' +
+                'Lastly, Linara—thank you for your eternal patience. <br />' +
+                '2024-06-21';
+        };
 
 
-
-
-
-;
         abstract.addTo(map);
         var zoomControl = L.control.zoom({
             position: 'topleft'
         }).addTo(map);
-        var measureControl = new L.Control.Measure({
-            position: 'topleft',
-            primaryLengthUnit: 'meters',
-            secondaryLengthUnit: 'kilometers',
-            primaryAreaUnit: 'sqmeters',
-            secondaryAreaUnit: 'hectares'
-        });
-        measureControl.addTo(map);
-        document.getElementsByClassName('leaflet-control-measure-toggle')[0].innerHTML = '';
-        document.getElementsByClassName('leaflet-control-measure-toggle')[0].className += ' fas fa-ruler';
+
+
         var bounds_group = new L.featureGroup([]);
         function setBounds() {
             map.setMaxBounds(map.getBounds());
+            map.setMinZoom(map.getZoom());
         }
         map.createPane('pane_World_0');
-        map.getPane('pane_World_0').style.zIndex = 400;
+        map.getPane('pane_World_0').style.zIndex = 300;
         var layer_World_0 = L.tileLayer('https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
             pane: 'pane_World_0',
             opacity: 1.0,
@@ -252,559 +303,389 @@
             minNativeZoom: 0,
             maxNativeZoom: 20
         });
-            layer_World_0;
-            //replace to remove year of meeting
-
+        layer_World_0;
+        map.addLayer(layer_World_0);
         function pop_AllCountries_1(feature, layer) {
-                var popupContent = '<table>\
-            <tr>\
-                <th scope="row">Country</th>\
-                <td>' + (feature.properties['WB_NAME'] !== null ? autolinker.link(feature.properties['WB_NAME'].toLocaleString()) : '') + '</td>\
-            </tr>\
-            <tr>\
-                <th scope="row">Year</th>\
-                <td>' + (feature.properties['Year'] !== null ? autolinker.link(feature.properties['Year'].toLocaleString()) : '') + '</td>\
-            </tr>\
-        </table>';
-                var content = removeEmptyRowsFromPopupContent(popupContent, feature);
-                layer.on('popupopen', function (e) {
-                    addClassToPopupIfMedia(content, e.popup);
-                });
-                layer.bindPopup(content, { maxHeight: 400 });
-            }
+            layer.on({
+                mouseout: function (e) {
+                    for (var i in e.target._eventParents) {
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
+                    }
+                },
+                mouseover: highlightFeature,
+            });
 
-        var pattern_AllCountries_1_0 = new L.StripePattern({
-            weight: 0.25,
-            spaceWeight: 1,
-            color: '#f7fbff',
-            opacity: 0.5,
-            spaceOpacity: 0.5,
-            angle: 360
-        });
-        pattern_AllCountries_1_0.addTo(map);
-        var pattern_AllCountries_1_0 = new L.StripePattern({
-            weight: 0.25,
-            spaceWeight: 1,
-            color: '#dce9f6',
-            opacity: 0.5,
-            spaceOpacity: 0.5,
-            angle: 360
-        });
-        pattern_AllCountries_1_0.addTo(map);
-        var pattern_AllCountries_1_0 = new L.StripePattern({
-            weight: 0.25,
-            spaceWeight: 1,
-            color: '#bed8ec',
-            opacity:0.5,
-            spaceOpacity: 0.5,
-            angle: 360
-        });
-        pattern_AllCountries_1_0.addTo(map);
-        var pattern_AllCountries_1_0 = new L.StripePattern({
-            weight: 0.25,
-            spaceWeight: 1,
-            color: '#8fc2de',
-            opacity: 0.5,
-            spaceOpacity: 0.5,
-            angle: 360
-        });
-        pattern_AllCountries_1_0.addTo(map);
-        var pattern_AllCountries_1_0 = new L.StripePattern({
-            weight: 0.25,
-            spaceWeight: 1,
-            color: '#5ba3d0',
-            opacity: 0.5,
-            spaceOpacity: 0.5,
-            angle: 360
-        });
-        pattern_AllCountries_1_0.addTo(map);
-        var pattern_AllCountries_1_0 = new L.StripePattern({
-            weight: 0.25,
-            spaceWeight: 1,
-            color: '#3282be',
-            opacity: 0.5,
-            spaceOpacity: 0.5,
-            angle: 360
-        });
-        pattern_AllCountries_1_0.addTo(map);
-        var pattern_AllCountries_1_0 = new L.StripePattern({
-            weight: 0.25,
-            spaceWeight: 1.0,
-            color: '#115ca5',
-            opacity: 0.5,
-            spaceOpacity: 0.5,
-            angle: 360
-        });
-        pattern_AllCountries_1_0.addTo(map);
-        var pattern_AllCountries_1_0 = new L.StripePattern({
-            weight: 0.25,
-            spaceWeight: 1.0,
-            color: '#08306b',
-            opacity: 0.5,
-            spaceOpacity: 0.5,
-            angle: 360
-        });
-        pattern_AllCountries_1_0.addTo(map);
-        var pattern_AllCountries_1_0 = new L.StripePattern({
-            weight: 0.25,
-            spaceWeight: 1.0,
-            color: '#f7fbff',
-            opacity: 0.5,
-            spaceOpacity: 0.5,
-            angle: 360
-        });
-        pattern_AllCountries_1_0.addTo(map);
-        var pattern_AllCountries_1_0 = new L.StripePattern({
-            weight: 0.25,
-            spaceWeight: 1.0,
-            color: '#dce9f6',
-            opacity: 0.5,
-            spaceOpacity: 0.5,
-            angle: 360
-        });
-        pattern_AllCountries_1_0.addTo(map);
-        var pattern_AllCountries_1_0 = new L.StripePattern({
-            weight: 0.25,
-            spaceWeight: 1.0,
-            color: '#bed8ec',
-            opacity: 0.5,
-            spaceOpacity: 0.5,
-            angle: 360
-        });
-        pattern_AllCountries_1_0.addTo(map);
-        var pattern_AllCountries_1_0 = new L.StripePattern({
-            weight: 0.25,
-            spaceWeight: 1.0,
-            color: '#8fc2de',
-            opacity: 0.5,
-            spaceOpacity: 0.5,
-            angle: 360
-        });
-        pattern_AllCountries_1_0.addTo(map);
-        var pattern_AllCountries_1_0 = new L.StripePattern({
-            weight: 0.25,
-            spaceWeight: 1.0,
-            color: '#5ba3d0',
-            opacity: 0.5,
-            spaceOpacity: 0.5,
-            angle: 360
-        });
-        pattern_AllCountries_1_0.addTo(map);
-        var pattern_AllCountries_1_0 = new L.StripePattern({
-            weight: 0.25,
-            spaceWeight: 1.0,
-            color: '#3282be',
-            opacity: 0.5,
-            spaceOpacity: 0.5,
-            angle: 360
-        });
-        pattern_AllCountries_1_0.addTo(map);
-        var pattern_AllCountries_1_0 = new L.StripePattern({
-            weight: 0.25,
-            spaceWeight: 1.0,
-            color: '#115ca5',
-            opacity: 0.5,
-            spaceOpacity: 0.5,
-            angle: 360
-        });
-        pattern_AllCountries_1_0.addTo(map);
-        var pattern_AllCountries_1_0 = new L.StripePattern({
-            weight: 0.25,
-            spaceWeight: 1.0,
-            color: '#08306b',
-            opacity: 0.5,
-            spaceOpacity: 0.5,
-            angle: 360
-        });
-        pattern_AllCountries_1_0.addTo(map);
+            // --- PRELOAD IMAGES ---
+            [feature.properties['Side_1'], feature.properties['Side_2']].forEach(src => {
+                if (src) {
+                    const img = new Image();
+                    img.src = src; // preload in browser cache
+                }
+            });
+
+            // All countries with images - make it clickable
+            var popupContent =
+                '<table style="width:100%;">' +
+
+                '<tr>' +
+                '<td colspan="2" style="text-align:center;">' +
+                '<div style="display:flex; gap:8px; justify-content:center;">' +
+
+                (feature.properties["Side_1"]
+                    ? '<a href="' + feature.properties["Side_1"] + '" target="_blank">' +
+                    '<img src="' + feature.properties["Side_1"] + '" style="width:120px; height:auto; border-radius:4px;">' +
+                    '</a>'
+                    : '') +
+
+                (feature.properties["Side_2"]
+                    ? '<a href="' + feature.properties["Side_2"] + '" target="_blank">' +
+                    '<img src="' + feature.properties["Side_2"] + '" style="width:120px; height:auto; border-radius:4px;">' +
+                    '</a>'
+                    : '') +
+
+                '</div>' +
+                '</td>' +
+                '</tr>' +
+
+                '<tr>' +
+                '<th scope="row">Country</th>' +
+                '<td>' + (feature.properties["WB_NAME"] || '') + '</td>' +
+                '</tr>' +
+
+                '<tr>' +
+                '<th scope="row">Year</th>' +
+                '<td>' + (feature.properties["Year"] || '') + '</td>' +
+                '</tr>' +
+                // Replace to make articles clickable
+                '<tr>' +
+                '<th scope="row">Article</th>' +
+                '<td>' + (feature.properties["Article"] ? '<a href="' + feature.properties["Article"] + '" target="_blank">' + feature.properties["Article"] + '</a>' : '') + '</td>' +
+                '</tr>' +
+
+
+                '<tr>' +
+                '<th scope="row">Person</th>' +
+                '<td>' + (feature.properties["Person"] || '') + '</td>' +
+                '</tr>' +
+
+                '<tr>' +
+                '<th scope="row">Country Origin</th>' +
+                '<td>' + (feature.properties["Country_Origin"] || '') + '</td>' +
+                '</tr>' +
+
+                '<tr>' +
+                '<th scope="row">City Origin</th>' +
+                '<td>' + (feature.properties["City_Origin"] || '') + '</td>' +
+                '</tr>' +
+
+                '<tr>' +
+                '<th scope="row">Year Meeting</th>' +
+                '<td>' + (feature.properties["Year_Meeting"] || '') + '</td>' +
+                '</tr>' +
+
+                '</table>';
+
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+            layer.on('popupopen', function (e) {
+                addClassToPopupIfMedia(content, e.popup);
+            });
+            layer.bindPopup(content, { maxHeight: 801 });
+
+
+        }
+
         function style_AllCountries_1_0(feature) {
-            switch(String(feature.properties['Year'])) {
+            switch (String(feature.properties['Year'])) {
                 case '2019':
                     return {
-                pane: 'pane_AllCountries_1',
-                stroke: false,
-                fillOpacity: 1,
-                fillPattern: pattern_AllCountries_1_0,
-                interactive: true,
-            }
+                        pane: 'pane_AllCountries_1',
+                        opacity: 1,
+                        color: 'rgba(82,82,82,1.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(247,251,255,0.65)',
+                        interactive: true,
+                    }
                     break;
                 case '2020':
                     return {
-                pane: 'pane_AllCountries_1',
-                stroke: false,
-                fillOpacity: 1,
-                fillPattern: pattern_AllCountries_1_0,
-                interactive: true,
-            }
+                        pane: 'pane_AllCountries_1',
+                        opacity: 1,
+                        color: 'rgba(82,82,82,1.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(220,233,246,0.65)',
+                        interactive: true,
+                    }
                     break;
                 case '2021':
                     return {
-                pane: 'pane_AllCountries_1',
-                stroke: false,
-                fillOpacity: 1,
-                fillPattern: pattern_AllCountries_1_0,
-                interactive: true,
-            }
+                        pane: 'pane_AllCountries_1',
+                        opacity: 1,
+                        color: 'rgba(82,82,82,1.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(190,216,236,0.65)',
+                        interactive: true,
+                    }
                     break;
                 case '2022':
                     return {
-                pane: 'pane_AllCountries_1',
-                stroke: false,
-                fillOpacity: 1,
-                fillPattern: pattern_AllCountries_1_0,
-                interactive: true,
-            }
+                        pane: 'pane_AllCountries_1',
+                        opacity: 1,
+                        color: 'rgba(82,82,82,1.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(143,194,222,0.65)',
+                        interactive: true,
+                    }
                     break;
                 case '2023':
                     return {
-                pane: 'pane_AllCountries_1',
-                stroke: false,
-                fillOpacity: 1,
-                fillPattern: pattern_AllCountries_1_0,
-                interactive: true,
-            }
+                        pane: 'pane_AllCountries_1',
+                        opacity: 1,
+                        color: 'rgba(82,82,82,1.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(91,163,208,0.65)',
+                        interactive: true,
+                    }
                     break;
                 case '2024':
                     return {
-                pane: 'pane_AllCountries_1',
-                stroke: false,
-                fillOpacity: 1,
-                fillPattern: pattern_AllCountries_1_0,
-                interactive: true,
-            }
+                        pane: 'pane_AllCountries_1',
+                        opacity: 1,
+                        color: 'rgba(82,82,82,1.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(50,130,190,0.65)',
+                        interactive: true,
+                    }
                     break;
                 case '2025':
                     return {
-                pane: 'pane_AllCountries_1',
-                stroke: false,
-                fillOpacity: 1,
-                fillPattern: pattern_AllCountries_1_0,
-                interactive: true,
-            }
+                        pane: 'pane_AllCountries_1',
+                        opacity: 1,
+                        color: 'rgba(82,82,82,1.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(17,92,165,0.65)',
+                        interactive: true,
+                    }
                     break;
-                case 'NULL':
+                case '2026':
                     return {
-                pane: 'pane_AllCountries_1',
-                stroke: false,
-                fillOpacity: 1,
-                fillPattern: pattern_AllCountries_1_0,
-                interactive: true,
-            }
+                        pane: 'pane_AllCountries_1',
+                        opacity: 1,
+                        color: 'rgba(82,82,82,1.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 0.75,
+                        fillColor: 'rgba(8,48,107,0.65)',
+                        interactive: true,
+                    }
                     break;
             }
         }
-        function style_AllCountries_1_1(feature) {
-            switch(String(feature.properties['Year'])) {
-                case '2019':
-                    return {
-                pane: 'pane_AllCountries_1',
-                opacity: 1,
-                color: 'rgba(247,251,255,1.0)',
-                dashArray: '',
-                lineCap: 'square',
-                lineJoin: 'bevel',
-                weight: 2.0,
-                fillOpacity: 0,
-                interactive: true,
-            }
-                    break;
-                case '2020':
-                    return {
-                pane: 'pane_AllCountries_1',
-                opacity: 1,
-                color: 'rgba(220,233,246,1.0)',
-                dashArray: '',
-                lineCap: 'square',
-                lineJoin: 'bevel',
-                weight: 2.0,
-                fillOpacity: 0,
-                interactive: true,
-            }
-                    break;
-                case '2021':
-                    return {
-                pane: 'pane_AllCountries_1',
-                opacity: 1,
-                color: 'rgba(190,216,236,1.0)',
-                dashArray: '',
-                lineCap: 'square',
-                lineJoin: 'bevel',
-                weight: 2.0,
-                fillOpacity: 0,
-                interactive: true,
-            }
-                    break;
-                case '2022':
-                    return {
-                pane: 'pane_AllCountries_1',
-                opacity: 1,
-                color: 'rgba(143,194,222,1.0)',
-                dashArray: '',
-                lineCap: 'square',
-                lineJoin: 'bevel',
-                weight: 2.0,
-                fillOpacity: 0,
-                interactive: true,
-            }
-                    break;
-                case '2023':
-                    return {
-                pane: 'pane_AllCountries_1',
-                opacity: 1,
-                color: 'rgba(91,163,208,1.0)',
-                dashArray: '',
-                lineCap: 'square',
-                lineJoin: 'bevel',
-                weight: 2.0,
-                fillOpacity: 0,
-                interactive: true,
-            }
-                    break;
-                case '2024':
-                    return {
-                pane: 'pane_AllCountries_1',
-                opacity: 1,
-                color: 'rgba(50,130,190,1.0)',
-                dashArray: '',
-                lineCap: 'square',
-                lineJoin: 'bevel',
-                weight: 2.0,
-                fillOpacity: 0,
-                interactive: true,
-            }
-                    break;
-                case '2025':
-                    return {
-                pane: 'pane_AllCountries_1',
-                opacity: 1,
-                color: 'rgba(17,92,165,1.0)',
-                dashArray: '',
-                lineCap: 'square',
-                lineJoin: 'bevel',
-                weight: 2.0,
-                fillOpacity: 0,
-                interactive: true,
-            }
-                    break;
-                case 'NULL':
-                    return {
-                pane: 'pane_AllCountries_1',
-                opacity: 1,
-                color: 'rgba(8,48,107,1.0)',
-                dashArray: '',
-                lineCap: 'square',
-                lineJoin: 'bevel',
-                weight: 2.0,
-                fillOpacity: 0,
-                interactive: true,
-            }
-                    break;
-            }
-        }
-           //replace to remove year of meeting
-
-
         map.createPane('pane_AllCountries_1');
         map.getPane('pane_AllCountries_1').style.zIndex = 401;
         map.getPane('pane_AllCountries_1').style['mix-blend-mode'] = 'normal';
-        var layer_AllCountries_1 = new L.geoJson.multiStyle(json_AllCountries_1, {
+        var layer_AllCountries_1 = new L.geoJson(json_AllCountries_1, {
             attribution: '',
             interactive: true,
             dataVar: 'json_AllCountries_1',
             layerName: 'layer_AllCountries_1',
             pane: 'pane_AllCountries_1',
             onEachFeature: pop_AllCountries_1,
-            styles: [style_AllCountries_1_0,style_AllCountries_1_1,]
+            style: style_AllCountries_1_0,
         });
         bounds_group.addLayer(layer_AllCountries_1);
-
-
-        //GioVanni
-
-        function createStarShape(latlng, options) {
-                return L.marker(latlng, {
-                    icon: L.divIcon({
-                        className: '',
-                        html: '<svg height="30" width="30" viewBox="0 0 24 24"><polygon points="12,0 14,10 24,12 14,14 12,24 10,14 0,12 10,10" style="fill:white;stroke:black;stroke-width:1" /></svg>',
-                        iconSize: [24, 24],
-                        iconAnchor: [12, 12]
-                    }),
-                    ...options
-                });
-            }
-
-            function style_G_2_0() {
-                return {
-                    pane: 'pane_G_2',
-                    opacity: 1,
-                    interactive: true,
-                };
-            }
-
-            map.createPane('pane_G_2');
-            map.getPane('pane_G_2').style.zIndex = 800;
-            map.getPane('pane_G_2').style['mix-blend-mode'] = 'normal';
-
-            var layer_G_2 = new L.geoJson(json_G_2, {
-                attribution: '',
-                interactive: true,
-                dataVar: 'json_G_2',
-                layerName: 'layer_G_2',
-                pane: 'pane_G_2',
-                onEachFeature: pop_G_2,
-                pointToLayer: function (feature, latlng) {
-                    var context = {
-                        feature: feature,
-                        variables: {}
-                    };
-                    return createStarShape(latlng, style_G_2_0(feature));
-                }
+        map.addLayer(layer_AllCountries_1);
+        function pop_PathtakenbytheCoins_2(feature, layer) {
+            layer.on({
+                mouseout: function (e) {
+                    for (var i in e.target._eventParents) {
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
+                    }
+                },
+                mouseover: highlightFeature,
             });
-
-            function pop_G_2(feature, layer) {
-                var popupContent = '<table>\
-        <tr>\
-            <td colspan="2"><strong>Thank You</strong><br />' + (feature.properties['Name'] !== null ? autolinker.link(feature.properties['Name'].toLocaleString()) : '') + '</td>\
-        </tr>\
-    </table>';
-                var content = removeEmptyRowsFromPopupContent(popupContent, feature);
-                layer.on('popupopen', function (e) {
-                    addClassToPopupIfMedia(content, e.popup);
-                });
-                layer.bindPopup(content, { maxHeight: 400 });
-            }
-            
-             // Giovani Part
-
-        bounds_group.addLayer(layer_G_2);
-        map.addLayer(layer_G_2);
-
-
-
-        function pop_TheNetwork_3(feature, layer) {
             var popupContent = '<table>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['Year'] !== null ? autolinker.link(feature.properties['Year'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                </table>';
+                        <tr>\
+                            <td colspan="2">' + (feature.properties['Year'] !== null ? autolinker.link(String(feature.properties['Year']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        </tr>\
+                    </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
-			layer.on('popupopen', function(e) {
-				addClassToPopupIfMedia(content, e.popup);
-			});
-			layer.bindPopup(content, { maxHeight: 800 });
+            layer.on('popupopen', function (e) {
+                addClassToPopupIfMedia(content, e.popup);
+            });
+            layer.bindPopup(content, { maxHeight: 801 });
         }
-
         //Replace
-        function style_TheNetwork_3_0() {
+        function style_PathtakenbytheCoins_2_0() {
             return {
-                pane: 'pane_TheNetwork_3',
-                opacity: 0.3, /* COPY ALL THIS */
-                color: 'rgba(0,228,232,0.2)',
+                pane: 'pane_PathtakenbytheCoins_2',
+                opacity: 0.5,
+                color: 'rgba(250,214,9,0.8)',
                 dashArray: '',
                 lineCap: 'square',
                 lineJoin: 'bevel',
-                weight: 0.2,/* COPY ALL THIS */
+                weight: 1.0,
                 fillOpacity: 0,
                 interactive: true,
             }
             //Replace
         }
-        map.createPane('pane_TheNetwork_3');
-        map.getPane('pane_TheNetwork_3').style.zIndex = 403;
-        map.getPane('pane_TheNetwork_3').style['mix-blend-mode'] = 'normal';
-        var layer_TheNetwork_3 = new L.geoJson(json_TheNetwork_3, {
+        map.createPane('pane_PathtakenbytheCoins_2');
+        map.getPane('pane_PathtakenbytheCoins_2').style.zIndex = 402;
+        map.getPane('pane_PathtakenbytheCoins_2').style['mix-blend-mode'] = 'normal';
+        var layer_PathtakenbytheCoins_2 = new L.geoJson(json_PathtakenbytheCoins_2, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_TheNetwork_3',
-            layerName: 'layer_TheNetwork_3',
-            pane: 'pane_TheNetwork_3',
-            onEachFeature: pop_TheNetwork_3,
-            style: style_TheNetwork_3_0,
+            dataVar: 'json_PathtakenbytheCoins_2',
+            layerName: 'layer_PathtakenbytheCoins_2',
+            pane: 'pane_PathtakenbytheCoins_2',
+            onEachFeature: pop_PathtakenbytheCoins_2,
+            style: style_PathtakenbytheCoins_2_0,
         });
-        bounds_group.addLayer(layer_TheNetwork_3);
-        map.addLayer(layer_TheNetwork_3);
-        function pop_PathtakenbytheCoins_4(feature, layer) {
-            var popupContent = '<table>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['Year'] !== null ? autolinker.link(feature.properties['Year'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                </table>';
+        bounds_group.addLayer(layer_PathtakenbytheCoins_2);
+        map.addLayer(layer_PathtakenbytheCoins_2);
+        function pop_CountriesofTheCoins_3(feature, layer) {
+            layer.on({
+                mouseout: function (e) {
+                    for (var i in e.target._eventParents) {
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+
+            // --- PRELOAD IMAGES ---
+            [feature.properties['Side_1'], feature.properties['Side_2']].forEach(src => {
+                if (src) {
+                    const img = new Image();
+                    img.src = src; // preload in browser cache
+                }
+            });
+
+            var popupContent = `
+                <table style="width:100%;">
+
+                    <!-- IMAGES ROW (TOP) -->
+                    <tr>
+                        <td colspan="2" style="text-align:center;">
+                            <div style="display:flex; gap:8px; justify-content:center;">
+                                ${feature.properties['Side_1'] ? `<a href="${feature.properties['Side_1']}" target="_blank"><img src="${feature.properties['Side_1']}" style="width:120px; height:auto; border-radius:4px;"></a>` : ''}
+                                ${feature.properties['Side_2'] ? `<a href="${feature.properties['Side_2']}" target="_blank"><img src="${feature.properties['Side_2']}" style="width:120px; height:auto; border-radius:4px;"></a>` : ''}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+
+                    <tr>
+                        <th scope="row">Thank You</th>
+                        <td>${feature.properties['Person'] || ''}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Title</th>
+                        <td>${feature.properties['Title'] || ''}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">City of Our Meeting</th>
+                        <td id="City_Collection">${feature.properties['City_Collection'] || ''}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Year</th>
+                        <td>${feature.properties['Year'] || ''}</td>
+                    </tr>
+
+                    '<tr>' +
+                    '<th scope="row">Article</th>' +
+                    '<td>' + (feature.properties["Article"] ? '<a href="' + feature.properties["Article"] + '" target="_blank">' + feature.properties["Article"] + '</a>' : '') + '</td>' +
+                    '</tr>' +
+
+
+                    <tr>
+                        <th scope="row">Country of the Friend</th>
+                        <td>${feature.properties['Country_Origin'] || ''}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">City of the Friend</th>
+                        <td>${feature.properties['City_Origin'] || ''}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Year Meeting</th>
+                        <td id="Year_Meeting">${feature.properties['Year_Meeting'] || ''}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">How far did they Travel?</th>
+                        <td id="Distance_Travelled">${feature.properties['Distance_Travelled'] || ''}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Their Own Country or Different?</th>
+                        <td id="Same_OriginAsCoin">${feature.properties['Same_OriginAsCoin'] || ''}</td>
+                    </tr>
+
+                </table>
+                `;
+
+
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
-			layer.on('popupopen', function(e) {
-				addClassToPopupIfMedia(content, e.popup);
-			});
-			layer.bindPopup(content, { maxHeight: 400 });
-        }
-        // Replace
-        function style_PathtakenbytheCoins_4_0() {
-                return {
-                    pane: 'pane_PathtakenbytheCoins_4', /* COPY ALL THIS */
-                    opacity: 0.5,
-                    color: 'rgba(250,214,9,0.8)',
-                    dashArray: '',
-                    lineCap: 'square',
-                    lineJoin: 'bevel',
-                    weight: 1.0,
-                    fillOpacity: 0,
-                    interactive: false,
-            }
-        //Replace
+            layer.on('popupopen', function (e) {
+                addClassToPopupIfMedia(content, e.popup);
+            });
+            layer.bindPopup(content, { maxHeight: 801 });
+
+
         }
 
-        map.createPane('pane_PathtakenbytheCoins_4');
-        map.getPane('pane_PathtakenbytheCoins_4').style.zIndex = 404;
-        map.getPane('pane_PathtakenbytheCoins_4').style['mix-blend-mode'] = 'normal';
-        var layer_PathtakenbytheCoins_4 = new L.geoJson(json_PathtakenbytheCoins_4, {
-            attribution: '',
-            interactive: true,
-            dataVar: 'json_PathtakenbytheCoins_4',
-            layerName: 'layer_PathtakenbytheCoins_4',
-            pane: 'pane_PathtakenbytheCoins_4',
-            onEachFeature: pop_PathtakenbytheCoins_4,
-            style: style_PathtakenbytheCoins_4_0,
-        });
-        bounds_group.addLayer(layer_PathtakenbytheCoins_4);
-        map.addLayer(layer_PathtakenbytheCoins_4);
-        function pop_CountriesofTheCoins_5(feature, layer) {
-            var popupContent = '<table>\
-                    <tr>\
-                        <th scope="row">Title</th>\
-                        <td>' + (feature.properties['Title'] !== null ? autolinker.link(feature.properties['Title'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2"><strong>City of Our Meeting</strong><br />' + (feature.properties['City_Collection'] !== null ? autolinker.link(feature.properties['City_Collection'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2"><strong>Year</strong><br />' + (feature.properties['Year'] !== null ? autolinker.link(feature.properties['Year'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2"><strong>Thank You </strong><br />' + (feature.properties['Person'] !== null ? autolinker.link(feature.properties['Person'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2"><strong>Country of the Friend</strong><br />' + (feature.properties['Country_Origin'] !== null ? autolinker.link(feature.properties['Country_Origin'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2"><strong>City of the Friend</strong><br />' + (feature.properties['City_Origin'] !== null ? autolinker.link(feature.properties['City_Origin'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2"><strong>How far did they Travel?</strong><br />' + (feature.properties['Distance_Travelled'] !== null ? autolinker.link(feature.properties['Distance_Travelled'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2"><strong>Their Own Country or Different?</strong><br />' + (feature.properties['Same_OriginAsCoin'] !== null ? autolinker.link(feature.properties['Same_OriginAsCoin'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                </table>';
-
-
-            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
-			layer.on('popupopen', function(e) {
-				addClassToPopupIfMedia(content, e.popup);
-			});
-			layer.bindPopup(content, { maxHeight: 400 });
-        }
-
-        function style_CountriesofTheCoins_5_0() {
+        function style_CountriesofTheCoins_3_0() {
             return {
-                pane: 'pane_CountriesofTheCoins_5',
+                pane: 'pane_CountriesofTheCoins_3',
                 radius: 4.0,
                 opacity: 1,
                 color: 'rgba(255,255,29,0.5098039215686274)',
@@ -818,9 +699,9 @@
                 interactive: true,
             }
         }
-        function style_CountriesofTheCoins_5_1() {
+        function style_CountriesofTheCoins_3_1() {
             return {
-                pane: 'pane_CountriesofTheCoins_5',
+                pane: 'pane_CountriesofTheCoins_3',
                 radius: 4.0,
                 opacity: 1,
                 color: 'rgba(35,35,35,0.0)',
@@ -830,203 +711,157 @@
                 weight: 1,
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(255,255,255,1)', //Replace
+                fillColor: 'rgba(255,255,255,1)',
                 interactive: true,
             }
         }
-        map.createPane('pane_CountriesofTheCoins_5');
-        map.getPane('pane_CountriesofTheCoins_5').style.zIndex = 405;
-        map.getPane('pane_CountriesofTheCoins_5').style['mix-blend-mode'] = 'normal';
-        var layer_CountriesofTheCoins_5 = new L.geoJson.multiStyle(json_CountriesofTheCoins_5, {
+        map.createPane('pane_CountriesofTheCoins_3');
+        map.getPane('pane_CountriesofTheCoins_3').style.zIndex = 400;
+        map.getPane('pane_CountriesofTheCoins_3').style['mix-blend-mode'] = 'normal';
+        var layer_CountriesofTheCoins_3 = new L.geoJson.multiStyle(json_CountriesofTheCoins_3, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_CountriesofTheCoins_5',
-            layerName: 'layer_CountriesofTheCoins_5',
-            pane: 'pane_CountriesofTheCoins_5',
-            onEachFeature: pop_CountriesofTheCoins_5,
+            dataVar: 'json_CountriesofTheCoins_3',
+            layerName: 'layer_CountriesofTheCoins_3',
+            pane: 'pane_CountriesofTheCoins_3',
+            onEachFeature: pop_CountriesofTheCoins_3,
             pointToLayers: [function (feature, latlng) {
                 var context = {
                     feature: feature,
                     variables: {}
                 };
-                return L.shapeMarker(latlng, style_CountriesofTheCoins_5_0(feature));
-            },function (feature, latlng) {
+                return L.shapeMarker(latlng, style_CountriesofTheCoins_3_0(feature));
+            },//replace
+            function (feature, latlng) {
                 var context = {
                     feature: feature,
                     variables: {}
                 };
-                return L.circleMarker(latlng, style_CountriesofTheCoins_5_1(feature)); //Replace
+                return L.circleMarker(latlng, style_CountriesofTheCoins_3_1(feature)); //Replace
             },
-        ]});
-        bounds_group.addLayer(layer_CountriesofTheCoins_5);
-        function pop_Friends_6(feature, layer) {
+            ]
+        });
+
+
+        bounds_group.addLayer(layer_CountriesofTheCoins_3);
+        map.addLayer(layer_CountriesofTheCoins_3);
+        function pop_Friends_4(feature, layer) {
+            layer.on({
+                mouseout: function (e) {
+                    for (var i in e.target._eventParents) {
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
+                    }
+                },
+                mouseover: highlightFeature,
+            });
             var popupContent = '<table>\
-                    <tr>\
-                        <td class="visible-with-data" id="Person"colspan="2"><strong>Thank you </strong><br />' + (feature.properties['Person'] !== null ? autolinker.link(feature.properties['Person'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">Country of the Friend</th>\
-                        <td>' + (feature.properties['Country_Origin'] !== null ? autolinker.link(feature.properties['Country_Origin'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">City of the Friend</th>\
-                        <td>' + (feature.properties['City_Origin'] !== null ? autolinker.link(feature.properties['City_Origin'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">Year</th>\
-                        <td>' + (feature.properties['Year'] !== null ? autolinker.link(feature.properties['Year'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                </table>';
+                        <tr>\
+                            <td class="visible-with-data" id="Person" colspan="2"><strong>Thank you </strong><br />' + (feature.properties['Person'] !== null ? autolinker.link(String(feature.properties['Person']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        </tr>\
+                        <tr>\
+                            <td class="visible-with-data" id="Country_Origin" colspan="2"><strong>Country of the Friend</strong><br />' + (feature.properties['Country_Origin'] !== null ? autolinker.link(String(feature.properties['Country_Origin']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        </tr>\
+                        <tr>\
+                            <th scope="row">City of the Friend</th>\
+                            <td>' + (feature.properties['City_Origin'] !== null ? autolinker.link(String(feature.properties['City_Origin']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        </tr>\
+                        <tr>\
+                            <th scope="row">Year</th>\
+                            <td>' + (feature.properties['Year'] !== null ? autolinker.link(String(feature.properties['Year']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        </tr>\
+                    </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
-			layer.on('popupopen', function(e) {
-				addClassToPopupIfMedia(content, e.popup);
-			});
-			layer.bindPopup(content, { maxHeight: 400 });
+            layer.on('popupopen', function (e) {
+                addClassToPopupIfMedia(content, e.popup);
+            });
+            layer.bindPopup(content, { maxHeight: 500 });
         }
 
-        //Replace 
-
-        function style_Friends_6_0() {
+        function style_Friends_4_0() {
             return {
-                pane: 'pane_Friends_6',
+                pane: 'pane_Friends_4',
                 radius: 8.0,
                 opacity: 1,
                 color: 'rgba(214,218,0,1.0)',
                 dashArray: '',
-                lineCap: 'round',
-                lineJoin: 'round',
-                weight: 2,
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
                 fill: true,
-                fillOpacity: 0.1,
-                fillColor: 'rgba(255,254,255,0.5)', //Replace
+                fillOpacity: 1,
+                fillColor: 'rgba(255,254,255,0.5)',
                 interactive: true,
             }
-
-            //Replace
         }
-
-        //Replace
-        map.createPane('pane_Friends_6'); //Replace whole section Stars
-            map.getPane('pane_Friends_6').style.zIndex = 406;
-            map.getPane('pane_Friends_6').style['mix-blend-mode'] = 'normal';
-
-            var starIcon = L.divIcon({
-                html: `<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <polygon fill="gold" fill-opacity="0.8" points="12,17.27 18.18,21 16.54,13.97 22,9.24 14.81,8.63 12,2 9.19,8.63 2,9.24 7.46,13.97 5.82,21 "/>
-          </svg>`,
-                className: 'custom-star-icon',
-                iconSize: [24, 24]
-            });
-
-            var layer_Friends_6 = new L.geoJson(json_Friends_6, {
-                attribution: '',
-                interactive: true,
-                dataVar: 'json_Friends_6',
-                layerName: 'layer_Friends_6',
-                pane: 'pane_Friends_6',
-                onEachFeature: pop_Friends_6,
-                pointToLayer: function (feature, latlng) {
-                    var context = {
-                        feature: feature,
-                        variables: {}
-                    };
-                    return L.marker(latlng, { icon: starIcon });
-                }
-            });
-
-          
-        bounds_group.addLayer(layer_Friends_6);
-            map.addLayer(layer_Friends_6);
+        map.createPane('pane_Friends_4');
+        map.getPane('pane_Friends_4').style.zIndex = 405;
+        map.getPane('pane_Friends_4').style['mix-blend-mode'] = 'normal';
 
         //Replace
 
+        var starIcon = L.divIcon({
+            html: `<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <polygon fill="gold" fill-opacity="0.8" points="12,17.27 18.18,21 16.54,13.97 22,9.24 14.81,8.63 12,2 9.19,8.63 2,9.24 7.46,13.97 5.82,21 "/>
+              </svg>`,
+            className: 'custom-star-icon',
+            iconSize: [24, 24]
+        });
 
-            //Origin
-            // Origin_7 Layer
-
-            function createStarShape_Origin(latlng, options) {
-                return L.marker(latlng, {
-                    icon: L.divIcon({
-                        className: '',
-                        html: '<svg height="30" width="30" viewBox="0 0 24 24"><polygon points="12,0 14,10 24,12 14,14 12,24 10,14 0,12 10,10" style="fill:yellow;stroke:red;stroke-width:2" /></svg>',
-                        iconSize: [30, 30],
-                        iconAnchor: [12, 12]
-                    }),
-                    ...options
-                });
-            }
-
-            function style_Origin_7_0() {
-                return {
-                    pane: 'pane_Origin_7', // Ensure this matches the pane name you create
-                    opacity: 1,
-                    interactive: true,
-                    // Add other style properties if needed
+        var layer_Friends_4 = new L.geoJson(json_Friends_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Friends_4',
+            layerName: 'layer_Friends_4',
+            pane: 'pane_Friends_4',
+            onEachFeature: pop_Friends_4,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
                 };
+                return L.marker(latlng, { icon: starIcon });
             }
+        });
 
-            map.createPane('pane_Origin_7');
-            map.getPane('pane_Origin_7').style.zIndex = 800;
-            map.getPane('pane_Origin_7').style['mix-blend-mode'] = 'normal';
+        bounds_group.addLayer(layer_Friends_4);
+        map.addLayer(layer_Friends_4);
 
-            var layer_Origin_7 = new L.geoJson(json_Origin_7, {
-                attribution: '',
-                interactive: true,
-                dataVar: 'json_Origin_7',
-                layerName: 'layer_Origin_7',
-                pane: 'pane_Origin_7',
-                onEachFeature: pop_Origin_7,
-                pointToLayer: function (feature, latlng) {
-                    var context = {
-                        feature: feature,
-                        variables: {}
-                    };
-                    return createStarShape_Origin(latlng, style_Origin_7_0(feature));
-                }
+
+        function pop_CityofMeeting_5(feature, layer) {
+            layer.on({
+                mouseout: function (e) {
+                    for (var i in e.target._eventParents) {
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
+                    }
+                },
+                mouseover: highlightFeature,
             });
-
-            function pop_Origin_7(feature, layer) {
-                var popupContent = '<table>\
-        <tr>\
-            <td colspan="2"><strong>Yours Sincerely</strong><br />' + (feature.properties['Sincerely'] !== null ? autolinker.link(feature.properties['Sincerely'].toLocaleString()) : '') + '</td>\
-        </tr>\
-    </table>';
-                var content = removeEmptyRowsFromPopupContent(popupContent, feature);
-                layer.on('popupopen', function (e) {
-                    addClassToPopupIfMedia(content, e.popup);
-                });
-                layer.bindPopup(content, { maxHeight: 800 });
-            }
-
-            bounds_group.addLayer(layer_Origin_7);
-            map.addLayer(layer_Origin_7);
-
-
-               //Origin
-
-
-
-
-        function pop_CityofMeeting_8(feature, layer) {
             var popupContent = '<table>\
-                    <tr>\
-                        <th scope="row">City of Meeting</th>\
-                        <td>' + (feature.properties['City_Collection'] !== null ? autolinker.link(feature.properties['City_Collection'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['Year_Meeting'] !== null ? autolinker.link(feature.properties['Year_Meeting'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                </table>';
+                        <tr>\
+                            <th scope="row">City of Meeting</th>\
+                            <td>' + (feature.properties['City_Collection'] !== null ? autolinker.link(String(feature.properties['City_Collection']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        </tr>\
+                        <tr>\
+                            <td class="visible-with-data" id="Side_1" colspan="2"><strong>Side_1</strong><br />' + (feature.properties['Side_1'] !== null ? autolinker.link(String(feature.properties['Side_1']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        </tr>\
+                        <tr>\
+                            <td class="visible-with-data" id="Side_2" colspan="2"><strong>Side_2</strong><br />' + (feature.properties['Side_2'] !== null ? autolinker.link(String(feature.properties['Side_2']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        </tr>\
+                    </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
-			layer.on('popupopen', function(e) {
-				addClassToPopupIfMedia(content, e.popup);
-			});
-			layer.bindPopup(content, { maxHeight: 1200 });
+            layer.on('popupopen', function (e) {
+                addClassToPopupIfMedia(content, e.popup);
+            });
+            layer.bindPopup(content, { maxHeight: 801 });
         }
 
-        function style_CityofMeeting_8_0() {
+        function style_CityofMeeting_5_0() {
             return {
-                pane: 'pane_CityofMeeting_8',
+                pane: 'pane_CityofMeeting_5',
                 radius: 4.0,
                 opacity: 1,
                 color: 'rgba(128,17,25,1.0)',
@@ -1040,49 +875,244 @@
                 interactive: true,
             }
         }
-        map.createPane('pane_CityofMeeting_8');
-        map.getPane('pane_CityofMeeting_8').style.zIndex = 750;
-        map.getPane('pane_CityofMeeting_8').style['mix-blend-mode'] = 'normal';
-        var layer_CityofMeeting_8 = new L.geoJson(json_CityofMeeting_8, {
+        map.createPane('pane_CityofMeeting_5');
+        map.getPane('pane_CityofMeeting_5').style.zIndex = 450;
+        map.getPane('pane_CityofMeeting_5').style['mix-blend-mode'] = 'normal';
+        var layer_CityofMeeting_5 = new L.geoJson(json_CityofMeeting_5, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_CityofMeeting_8',
-            layerName: 'layer_CityofMeeting_8',
-            pane: 'pane_CityofMeeting_8',
-            onEachFeature: pop_CityofMeeting_8,
+            dataVar: 'json_CityofMeeting_5',
+            layerName: 'layer_CityofMeeting_5',
+            pane: 'pane_CityofMeeting_5',
+            onEachFeature: pop_CityofMeeting_5,
             pointToLayer: function (feature, latlng) {
                 var context = {
                     feature: feature,
                     variables: {}
                 };
-                return L.circleMarker(latlng, style_CityofMeeting_8_0(feature));
+                return L.circleMarker(latlng, style_CityofMeeting_5_0(feature));
             },
         });
-        bounds_group.addLayer(layer_CityofMeeting_8);
-        map.addLayer(layer_CityofMeeting_8);
-        var osmGeocoder = new L.Control.Geocoder({
-            collapsed: true,
+        bounds_group.addLayer(layer_CityofMeeting_5);
+        map.addLayer(layer_CityofMeeting_5);
+
+        //Giovanni
+        function createStarShape(latlng, options) {
+            return L.marker(latlng, {
+                icon: L.divIcon({
+                    className: '',
+                    html: '<svg height="30" width="30" viewBox="0 0 24 24"><polygon points="12,0 14,10 24,12 14,14 12,24 10,14 0,12 10,10" style="fill:white;stroke:black;stroke-width:1" /></svg>',
+                    iconSize: [24, 24],
+                    iconAnchor: [12, 12]
+                }),
+                ...options
+            });
+        }
+
+
+        function pop_G_6(feature, layer) {
+            layer.on({
+                mouseout: function (e) {
+                    for (var i in e.target._eventParents) {
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                        <tr>\
+                            <td colspan="2"><strong>Thank You</strong><br />' + (feature.properties['Name'] !== null ? autolinker.link(String(feature.properties['Name']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        </tr>\
+                    </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+            layer.on('popupopen', function (e) {
+                addClassToPopupIfMedia(content, e.popup);
+            });
+            layer.bindPopup(content, { maxHeight: 801 });
+        }
+
+        function style_G_6_0() {
+            return {
+                pane: 'pane_G_6',
+                radius: 12.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_G_6');
+        map.getPane('pane_G_6').style.zIndex = 406;
+        map.getPane('pane_G_6').style['mix-blend-mode'] = 'normal';
+        var layer_G_6 = new L.geoJson(json_G_6, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_G_6',
+            layerName: 'layer_G_6',
+            pane: 'pane_G_6',
+            onEachFeature: pop_G_6,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return createStarShape(latlng, style_G_6_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_G_6);
+        map.addLayer(layer_G_6);
+
+        // Origin
+
+        function createStarShape_Origin(latlng, options) {
+            return L.marker(latlng, {
+                icon: L.divIcon({
+                    className: '',
+                    html: '<svg height="30" width="30" viewBox="0 0 24 24"><polygon points="12,0 14,10 24,12 14,14 12,24 10,14 0,12 10,10" style="fill:yellow;stroke:red;stroke-width:2" /></svg>',
+                    iconSize: [50, 50],
+                    iconAnchor: [12, 12]
+                }),
+                ...options
+            });
+        }
+
+        function pop_Origin_7(feature, layer) {
+            layer.on({
+                mouseout: function (e) {
+                    for (var i in e.target._eventParents) {
+                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
+                            e.target._eventParents[i].resetStyle(e.target);
+                        }
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                        <tr>\
+                            <td colspan="2"><strong>Yours Sincerely</strong><br />' + (feature.properties['Sincerely'] !== null ? autolinker.link(String(feature.properties['Sincerely']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        </tr>\
+                    </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+            layer.on('popupopen', function (e) {
+                addClassToPopupIfMedia(content, e.popup);
+            });
+            layer.bindPopup(content, { maxHeight: 801 });
+        }
+
+        function style_Origin_7_0() {
+            return {
+                pane: 'pane_Origin_7',
+                radius: 8.8,
+                opacity: 1,
+                color: 'rgba(228,0,11,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,240,105,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Origin_7');
+        map.getPane('pane_Origin_7').style.zIndex = 600;
+        map.getPane('pane_Origin_7').style['mix-blend-mode'] = 'normal';
+        var layer_Origin_7 = new L.geoJson(json_Origin_7, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Origin_7',
+            layerName: 'layer_Origin_7',
+            pane: 'pane_Origin_7',
+            onEachFeature: pop_Origin_7,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return createStarShape_Origin(latlng, style_Origin_7_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Origin_7);
+        map.addLayer(layer_Origin_7);
+        layer_Origin_7.bringToFront();
+
+
+
+
+        const url = {
+            "Nominatim OSM": "https://nominatim.openstreetmap.org/search?format=geojson&addressdetails=1&",
+            "France BAN": "https://api-adresse.data.gouv.fr/search/?"
+        }
+        var photonControl = L.control.photon({
+            url: url["Nominatim OSM"],
+            feedbackLabel: '',
             position: 'topleft',
-            text: 'Search',
-            title: 'Testing'
+            includePosition: true,
+            initial: true,
+            // resultsHandler: myHandler,
         }).addTo(map);
-        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
-        .className += ' fa fa-search';
-        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
-        .title += 'Search for a place';
-        var baseMaps = {};
+        photonControl._container.childNodes[0].style.borderRadius = "10px"
+        // Create a variable to store the geoJSON data
+        var x = null;
+        // Create a variable to store the marker
+        var marker = null;
+        // Add an event listener to the Photon control to create a marker from the returned geoJSON data
+        var z = null;
+        photonControl.on('selected', function (e) {
+            console.log(photonControl.search.resultsContainer);
+            if (x != null) {
+                map.removeLayer(obj3.marker);
+                map.removeLayer(x);
+            }
+            obj2.gcd = e.choice;
+            x = L.geoJSON(obj2.gcd).addTo(map);
+            var label = typeof obj2.gcd.properties.label === 'undefined' ? obj2.gcd.properties.display_name : obj2.gcd.properties.label;
+            obj3.marker = L.marker(x.getLayers()[0].getLatLng()).bindPopup(label).addTo(map);
+            map.setView(x.getLayers()[0].getLatLng(), 17);
+            z = typeof e.choice.properties.label === 'undefined' ? e.choice.properties.display_name : e.choice.properties.label;
+            console.log(e);
+            e.target.input.value = z;
+        });
+        var search = document.getElementsByClassName("leaflet-photon leaflet-control")[0];
+        search.classList.add("leaflet-control-search")
+        search.style.display = "flex";
+        search.style.backgroundColor = "rgba(255,255,255,0.5)"
+
+        // Create the new button element
+        var button = document.createElement("div");
+        button.id = "gcd-button-control";
+        button.className = "gcd-gl-btn fa fa-search search-button";
+
+        // Insert the button at the beginning of the search control
+        search.insertBefore(button, search.firstChild);
+        last = search.lastChild;
+        last.style.display = "none";
+        button.addEventListener("click", function (e) {
+            if (last.style.display === "none") {
+                last.style.display = "block";
+            } else {
+                last.style.display = "none";
+            }
+        });
         var overlaysTree = [
-            {label: '<img src="legend/CityofMeeting_8.png" /> City of Meeting', layer: layer_CityofMeeting_8},
-            {label: '<img src="legend/Origin_7.png" /> Origin', layer: layer_Origin_7},
-            {label: '<img src="legend/Friends_6.png" /> Friends', layer: layer_Friends_6},
-            {label: '<img src="legend/CountriesofTheCoins_5.png" /> Countries of The Coins', layer: layer_CountriesofTheCoins_5},
-            {label: '<img src="legend/PathtakenbytheCoins_4.png" /> Path taken by the Coins', layer: layer_PathtakenbytheCoins_4},
-            {label: '<img src="legend/TheNetwork_3.png" /> The Network', layer: layer_TheNetwork_3},
-            {label: '<img src="legend/G_2.png" /> G', layer: layer_G_2},
-            {label: 'All Countries <br /><table><tr><td style="text-align: center;"><img src="legend/AllCountries_1_20190.png" /></td><td>2019</td></tr><tr><td style="text-align: center;"><img src="legend/AllCountries_1_20201.png" /></td><td>2020</td></tr><tr><td style="text-align: center;"><img src="legend/AllCountries_1_20212.png" /></td><td>2021</td></tr><tr><td style="text-align: center;"><img src="legend/AllCountries_1_20223.png" /></td><td>2022</td></tr><tr><td style="text-align: center;"><img src="legend/AllCountries_1_20234.png" /></td><td>2023</td></tr><tr><td style="text-align: center;"><img src="legend/AllCountries_1_20245.png" /></td><td>2024</td></tr><tr><td style="text-align: center;"><img src="legend/AllCountries_1_20256.png" /></td><td>2025</td></tr></table>', layer: layer_AllCountries_1},
-            // remove the last label for removing nulls
-            {label: "World", layer: layer_World_0},]
-        var lay = L.control.layers.tree(null, overlaysTree,{
+            { label: '<img src="legend/Origin_7.png" /> Origin', layer: layer_Origin_7 },
+            { label: '<img src="legend/G_6.png" /> G', layer: layer_G_6 },
+            { label: '<img src="legend/CityofMeeting_5.png" /> City of Meeting', layer: layer_CityofMeeting_5 },
+            { label: '<img src="legend/Friends_4.png" /> Friends', layer: layer_Friends_4 },
+            { label: '<img src="legend/CountriesofTheCoins_3.png" /> Countries of The Coins', layer: layer_CountriesofTheCoins_3 },
+            { label: '<img src="legend/PathtakenbytheCoins_2.png" /> Path taken by the Coins', layer: layer_PathtakenbytheCoins_2 },
+            { label: 'All Countries <br /><table><tr><td style="text-align: center;"><img src="legend/AllCountries_1_20190.png" /></td><td>2019</td></tr><tr><td style="text-align: center;"><img src="legend/AllCountries_1_20201.png" /></td><td>2020</td></tr><tr><td style="text-align: center;"><img src="legend/AllCountries_1_20212.png" /></td><td>2021</td></tr><tr><td style="text-align: center;"><img src="legend/AllCountries_1_20223.png" /></td><td>2022</td></tr><tr><td style="text-align: center;"><img src="legend/AllCountries_1_20234.png" /></td><td>2023</td></tr><tr><td style="text-align: center;"><img src="legend/AllCountries_1_20245.png" /></td><td>2024</td></tr><tr><td style="text-align: center;"><img src="legend/AllCountries_1_20256.png" /></td><td>2025</td></tr><tr><td style="text-align: center;"><img src="legend/AllCountries_1_20267.png" /></td><td>2026</td></tr></table>', layer: layer_AllCountries_1 },
+            { label: "World", layer: layer_World_0 },]
+        var lay = L.control.layers.tree(null, overlaysTree, {
             //namedToggle: true,
             //selectorBack: false,
             //closedSymbol: '&#8862; &#x1f5c0;',
@@ -1094,166 +1124,174 @@
         lay.addTo(map);
         setBounds();
         map.addControl(new L.Control.Search({
-            layer: layer_CountriesofTheCoins_5,
+            layer: layer_CountriesofTheCoins_3,
             initial: false,
             hideMarkerOnCollapse: true,
-            propertyName: 'Country_Origin'}));
-        document.getElementsByClassName('search-button')[0].className +=
-         ' fa fa-binoculars';
-        var mapDiv = document.getElementById('map');
+            propertyName: 'Person'
+        }));
+        if (typeof url === 'undefined') {
+            document.getElementsByClassName('search-button')[0].className += ' fa fa-binoculars';
+        } else {
+            document.getElementsByClassName('search-button')[1].className += ' fa fa-binoculars';
+        }
+
+        //Slider
+        /*var mapDiv = document.getElementById('map');
         var row = document.createElement('div');
-        row.className="row";
-        row.id="all";
+        row.className = "row";
+        row.id = "all";
         row.style.height = "100%";
         var col1 = document.createElement('div');
-        col1.className="col9";
+        col1.className = "col9";
         col1.id = "mapWindow";
         col1.style.height = "99%";
-        col1.style.width = "100%"; //Replace to 100
+        col1.style.width = "100%";
         col1.style.display = "inline-block";
         var col2 = document.createElement('div');
-        col2.className="col3";
+        col2.className = "col3";
         col2.id = "menu";
         col2.style.display = "inline-block";
         mapDiv.parentNode.insertBefore(row, mapDiv);
         document.getElementById("all").appendChild(col1);
         document.getElementById("all").appendChild(col2);
         col1.appendChild(mapDiv)
+        */
 
 
 
 
-        var Filters = {"Year": "int"};
+
+        var Filters = { "Year": "int" };
         function filterFunc() {
-          map.eachLayer(function(lyr){
-          if ("options" in lyr && "dataVar" in lyr["options"]){
-            features = this[lyr["options"]["dataVar"]].features.slice(0);
-            try{
-              for (key in Filters){
-                keyS = key.replace(/[^a-zA-Z0-9_]/g, "")
-                if (Filters[key] == "str" || Filters[key] == "bool"){
-                  var selection = [];
-                  var options = document.getElementById("sel_" + keyS).options
-                  for (var i=0; i < options.length; i++) {
-                    if (options[i].selected) selection.push(options[i].value);
-                  }
-                    try{
-                      if (key in features[0].properties){
-                        for (i = features.length - 1;
-                          i >= 0; --i){
-                          if (selection.indexOf(
-                          features[i].properties[key])<0
-                          && selection.length>0) {
-                          features.splice(i,1);
-                          }
+            map.eachLayer(function (lyr) {
+                if ("options" in lyr && "dataVar" in lyr["options"]) {
+                    features = this[lyr["options"]["dataVar"]].features.slice(0);
+                    try {
+                        for (key in Filters) {
+                            keyS = key.replace(/[^a-zA-Z0-9_]/g, "")
+                            if (Filters[key] == "str" || Filters[key] == "bool") {
+                                var selection = [];
+                                var options = document.getElementById("sel_" + keyS).options
+                                for (var i = 0; i < options.length; i++) {
+                                    if (options[i].selected) selection.push(options[i].value);
+                                }
+                                try {
+                                    if (key in features[0].properties) {
+                                        for (i = features.length - 1;
+                                            i >= 0; --i) {
+                                            if (selection.indexOf(
+                                                features[i].properties[key]) < 0
+                                                && selection.length > 0) {
+                                                features.splice(i, 1);
+                                            }
+                                        }
+                                    }
+                                } catch (err) {
+                                }
+                            }
+                            if (Filters[key] == "int") {
+                                sliderVals = document.getElementById(
+                                    "div_" + keyS).noUiSlider.get();
+                                try {
+                                    if (key in features[0].properties) {
+                                        for (i = features.length - 1; i >= 0; --i) {
+                                            if (parseInt(features[i].properties[key])
+                                                < sliderVals[0]
+                                                || parseInt(features[i].properties[key])
+                                                > sliderVals[1]) {
+                                                features.splice(i, 1);
+                                            }
+                                        }
+                                    }
+                                } catch (err) {
+                                }
+                            }
+                            if (Filters[key] == "real") {
+                                sliderVals = document.getElementById(
+                                    "div_" + keyS).noUiSlider.get();
+                                try {
+                                    if (key in features[0].properties) {
+                                        for (i = features.length - 1; i >= 0; --i) {
+                                            if (features[i].properties[key]
+                                                < sliderVals[0]
+                                                || features[i].properties[key]
+                                                > sliderVals[1]) {
+                                                features.splice(i, 1);
+                                            }
+                                        }
+                                    }
+                                } catch (err) {
+                                }
+                            }
+                            if (Filters[key] == "date"
+                                || Filters[key] == "datetime"
+                                || Filters[key] == "time") {
+                                try {
+                                    if (key in features[0].properties) {
+                                        HTMLkey = key.replace(/[&\/\\#,+()$~%.'":*?<>{} ]/g, '');
+                                        startdate = document.getElementById("dat_" +
+                                            HTMLkey + "_date1").value.replace(" ", "T");
+                                        enddate = document.getElementById("dat_" +
+                                            HTMLkey + "_date2").value.replace(" ", "T");
+                                        for (i = features.length - 1; i >= 0; --i) {
+                                            if (features[i].properties[key] < startdate
+                                                || features[i].properties[key] > enddate) {
+                                                features.splice(i, 1);
+                                            }
+                                        }
+                                    }
+                                } catch (err) {
+                                }
+                            }
                         }
-                      }
-                    } catch(err){
-                  }
+                    } catch (err) {
+                    }
+                    this[lyr["options"]["layerName"]].clearLayers();
+                    this[lyr["options"]["layerName"]].addData(features);
                 }
-                if (Filters[key] == "int"){
-                  sliderVals =  document.getElementById(
-                    "div_" + keyS).noUiSlider.get();
-                  try{
-                    if (key in features[0].properties){
-                    for (i = features.length - 1; i >= 0; --i){
-                      if (parseInt(features[i].properties[key])
-                          < sliderVals[0]
-                          || parseInt(features[i].properties[key])
-                          > sliderVals[1]){
-                            features.splice(i,1);
-                          }
-                        }
-                      }
-                    } catch(err){
-                    }
-                  }
-                if (Filters[key] == "real"){
-                  sliderVals =  document.getElementById(
-                    "div_" + keyS).noUiSlider.get();
-                  try{
-                    if (key in features[0].properties){
-                    for (i = features.length - 1; i >= 0; --i){
-                      if (features[i].properties[key]
-                          < sliderVals[0]
-                          || features[i].properties[key]
-                          > sliderVals[1]){
-                            features.splice(i,1);
-                          }
-                        }
-                      }
-                    } catch(err){
-                    }
-                  }
-                if (Filters[key] == "date"
-                  || Filters[key] == "datetime"
-                  || Filters[key] == "time"){
-                  try{
-                    if (key in features[0].properties){
-                      HTMLkey = key.replace(/[&\/\\#,+()$~%.'":*?<>{} ]/g, '');
-                      startdate = document.getElementById("dat_" +
-                        HTMLkey + "_date1").value.replace(" ", "T");
-                      enddate = document.getElementById("dat_" +
-                        HTMLkey + "_date2").value.replace(" ", "T");
-                      for (i = features.length - 1; i >= 0; --i){
-                        if (features[i].properties[key] < startdate
-                          || features[i].properties[key] > enddate){
-                          features.splice(i,1);
-                        }
-                      }
-                    }
-                  } catch(err){
-                  }
-                }
-              }
-            } catch(err){
-            }
-          this[lyr["options"]["layerName"]].clearLayers();
-          this[lyr["options"]["layerName"]].addData(features);
-          }
-          })
+            })
         }
-            document.getElementById("menu").appendChild(
-                document.createElement("div"));
-            var div_Year = document.createElement("div");
-            div_Year.id = "div_Year";
-            div_Year.className = "slider";
-            document.getElementById("menu").appendChild(div_Year);
-            var lab_Year = document.createElement('div');
-            lab_Year.innerHTML  = 'Year: <span id="val_Year"></span>';
-            lab_Year.className = 'filterlabel';
-            document.getElementById("menu").appendChild(lab_Year);
-            /*var reset_Year = document.createElement('div');
-            reset_Year.innerHTML = 'clear filter';
-            reset_Year.className = 'filterlabel';
-            lab_Year.className = 'filterlabel';
-            reset_Year.onclick = function() {
-                sel_Year.noUiSlider.reset();
-            };
-            document.getElementById("menu").appendChild(reset_Year);
-            */
-            var sel_Year = document.getElementById('div_Year');
-            noUiSlider.create(sel_Year, {
-                connect: true,
-                start: [2019, 2025],
-                step: 1,
-                format: wNumb({
-                    decimals: 0,
-                    }),
-                range: {
+        document.getElementById("menu").appendChild(
+            document.createElement("div"));
+        var div_Year = document.createElement("div");
+        div_Year.id = "div_Year";
+        div_Year.className = "slider";
+        document.getElementById("menu").appendChild(div_Year);
+        var lab_Year = document.createElement('div');
+        lab_Year.innerHTML = 'Year: <span id="val_Year"></span>';
+        lab_Year.className = 'filterlabel';
+        document.getElementById("menu").appendChild(lab_Year);
+        /*var reset_Year = document.createElement('div');
+        reset_Year.innerHTML = 'clear filter';
+        reset_Year.className = 'filterlabel';
+        lab_Year.className = 'filterlabel';
+        reset_Year.onclick = function() {
+            sel_Year.noUiSlider.reset();
+        };
+        document.getElementById("menu").appendChild(reset_Year);
+         */
+        var sel_Year = document.getElementById('div_Year');
+        noUiSlider.create(sel_Year, {
+            connect: true,
+            start: [2019, 2026],
+            step: 1,
+            format: wNumb({
+                decimals: 0,
+            }),
+            range: {
                 min: 2019,
-                max: 2025
-                }
-            });
-            sel_Year.noUiSlider.on('update', function (values) {
-            filterVals =[];
-            for (value in values){
-            filterVals.push(parseInt(value))
+                max: 2026
+            }
+        });
+        sel_Year.noUiSlider.on('update', function (values) {
+            filterVals = [];
+            for (value in values) {
+                filterVals.push(parseInt(value))
             }
             val_Year = document.getElementById('val_Year');
             val_Year.innerHTML = values.join(' - ');
-                filterFunc()
-            });
-        </script>
-    </body>
+            filterFunc()
+        });
+    </script>
+</body>
 </html>
