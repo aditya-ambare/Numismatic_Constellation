@@ -395,7 +395,7 @@
             layer.on('popupopen', function (e) {
                 addClassToPopupIfMedia(content, e.popup);
             });
-            layer.bindPopup(content, { maxHeight: 801 });
+            layer.bindPopup(content, { maxHeight: 1000 });
 
 
         }
@@ -525,7 +525,7 @@
             }
         }
         map.createPane('pane_AllCountries_1');
-        map.getPane('pane_AllCountries_1').style.zIndex = 401;
+        map.getPane('pane_AllCountries_1').style.zIndex = 390;
         map.getPane('pane_AllCountries_1').style['mix-blend-mode'] = 'normal';
         var layer_AllCountries_1 = new L.geoJson(json_AllCountries_1, {
             attribution: '',
@@ -558,7 +558,7 @@
             layer.on('popupopen', function (e) {
                 addClassToPopupIfMedia(content, e.popup);
             });
-            layer.bindPopup(content, { maxHeight: 801 });
+            layer.bindPopup(content, { maxHeight: 1000 });
         }
         //Replace
         function style_PathtakenbytheCoins_2_0() {
@@ -683,7 +683,7 @@
             layer.on('popupopen', function (e) {
                 addClassToPopupIfMedia(content, e.popup);
             });
-            layer.bindPopup(content, { maxHeight: 801 });
+            layer.bindPopup(content, { maxHeight: 1000 });
 
 
         }
@@ -781,7 +781,7 @@
             layer.on('popupopen', function (e) {
                 addClassToPopupIfMedia(content, e.popup);
             });
-            layer.bindPopup(content, { maxHeight: 500 });
+            layer.bindPopup(content, { maxHeight: 1000 });
         }
 
         function style_Friends_4_0() {
@@ -845,29 +845,26 @@
                 },
                 mouseover: highlightFeature,
             });
-            var popupContent = '<table>\
-                        <tr>\
-                            <th scope="row">City of Meeting</th>\
-                            <td>' + (feature.properties['City_Collection'] !== null ? autolinker.link(String(feature.properties['City_Collection']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                        </tr>\
-                        <tr>\
-                            <td class="visible-with-data" id="Side_1" colspan="2"><strong>Side_1</strong><br />' + (feature.properties['Side_1'] !== null ? autolinker.link(String(feature.properties['Side_1']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                        </tr>\
-                        <tr>\
-                            <td class="visible-with-data" id="Side_2" colspan="2"><strong>Side_2</strong><br />' + (feature.properties['Side_2'] !== null ? autolinker.link(String(feature.properties['Side_2']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                        </tr>\
-                    </table>';
+            var popupContent = '<table>' +
+                '<tr>' +
+                '<th scope="row">City of Meeting</th>' +
+                '<td>' + (feature.properties['City_Collection'] !== null
+                    ? autolinker.link(String(feature.properties['City_Collection']).replace(/'/g, "\\'").toLocaleString())
+                    : '') + '</td>' +
+                '</tr>' +
+                '</table>';
+
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
             layer.on('popupopen', function (e) {
                 addClassToPopupIfMedia(content, e.popup);
             });
-            layer.bindPopup(content, { maxHeight: 801 });
+            layer.bindPopup(content, { maxHeight: 1000 });
         }
 
         function style_CityofMeeting_5_0() {
             return {
                 pane: 'pane_CityofMeeting_5',
-                radius: 4.0,
+                radius: 5.0,
                 opacity: 1,
                 color: 'rgba(128,17,25,1.0)',
                 dashArray: '',
@@ -881,7 +878,7 @@
             }
         }
         map.createPane('pane_CityofMeeting_5');
-        map.getPane('pane_CityofMeeting_5').style.zIndex = 450;
+        map.getPane('pane_CityofMeeting_5').style.zIndex = 650;
         map.getPane('pane_CityofMeeting_5').style['mix-blend-mode'] = 'normal';
         var layer_CityofMeeting_5 = new L.geoJson(json_CityofMeeting_5, {
             attribution: '',
@@ -935,7 +932,7 @@
             layer.on('popupopen', function (e) {
                 addClassToPopupIfMedia(content, e.popup);
             });
-            layer.bindPopup(content, { maxHeight: 801 });
+            layer.bindPopup(content, { maxHeight: 1000 });
         }
 
         function style_G_6_0() {
@@ -1009,7 +1006,7 @@
             layer.on('popupopen', function (e) {
                 addClassToPopupIfMedia(content, e.popup);
             });
-            layer.bindPopup(content, { maxHeight: 801 });
+            layer.bindPopup(content, { maxHeight: 1000 });
         }
 
         function style_Origin_7_0() {
@@ -1029,7 +1026,7 @@
             }
         }
         map.createPane('pane_Origin_7');
-        map.getPane('pane_Origin_7').style.zIndex = 600;
+        map.getPane('pane_Origin_7').style.zIndex = 650;
         map.getPane('pane_Origin_7').style['mix-blend-mode'] = 'normal';
         var layer_Origin_7 = new L.geoJson(json_Origin_7, {
             attribution: '',
@@ -1048,7 +1045,7 @@
         });
         bounds_group.addLayer(layer_Origin_7);
         map.addLayer(layer_Origin_7);
-        layer_Origin_7.bringToFront();
+        
 
 
 

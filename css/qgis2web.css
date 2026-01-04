@@ -28,13 +28,14 @@ html, body, #map {
     font: 14px/1.6 'Open Sans', Arial, sans-serif;
     background: rgba(0,0,0,0.0); /* fully transparent */
     color: #ffffff;
-    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    box-shadow: 0 0 15px rgba(0,0,0,0.0);
     border-radius: 5px;
 }
 
     .info h2 {
         margin: 0 0 5px;
         color: #ffffff;
+        text-shadow: 0 3px 10px rgba(0, 0, 0, 0.0);
     }
 
 /* Leaflet container */
@@ -112,6 +113,7 @@ html, body, #map {
     color: #ffffff !important;
 }
 
+
 /* Abstract blocks */
 .abstract {
     font: bold 18px 'Lucida Console', Monaco, monospace;
@@ -129,7 +131,7 @@ html, body, #map {
     font: 12px/1.5 'Open Sans', Arial, sans-serif;
     background-color: rgba(0,0,0,0.0);
     color: #ffffff;
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    box-shadow: 0 0 15px rgba(0,0,0,0.0);
     border-radius: 5px;
     max-width: 40%;
 }
