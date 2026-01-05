@@ -304,6 +304,29 @@
             maxNativeZoom: 20
         });
         layer_World_0;
+
+
+        // Preload images
+
+        var imageCache = {};
+
+        function preloadImage(url) {
+            if (!url || imageCache[url]) return;
+            var img = new Image();
+            img.src = url;
+            imageCache[url] = img;
+        }
+
+        function preloadImagesFromLayer(layer, props) {
+            layer.eachLayer(function (l) {
+                if (!l.feature || !l.feature.properties) return;
+                props.forEach(function (p) {
+                    var url = l.feature.properties[p];
+                    if (url) preloadImage(url);
+                });
+            });
+        }
+
         map.addLayer(layer_World_0);
         function pop_AllCountries_1(feature, layer) {
             layer.on({
@@ -317,13 +340,7 @@
                 mouseover: highlightFeature,
             });
 
-            // --- PRELOAD IMAGES ---
-            [feature.properties['Side_1'], feature.properties['Side_2']].forEach(src => {
-                if (src) {
-                    const img = new Image();
-                    img.src = src; // preload in browser cache
-                }
-            });
+           
 
             // All countries with images - make it clickable
             var popupContent =
@@ -585,13 +602,7 @@
                 mouseover: highlightFeature,
             });
 
-            // --- PRELOAD IMAGES ---
-            [feature.properties['Side_1'], feature.properties['Side_2']].forEach(src => {
-                if (src) {
-                    const img = new Image();
-                    img.src = src; // preload in browser cache
-                }
-            });
+            
 
             var popupContent = `
                 <table style="width:100%;">
@@ -745,22 +756,70 @@
                 },
                 mouseover: highlightFeature,
             });
-            var popupContent = '<table>\
-                        <tr>\
-                            <td class="visible-with-data" id="Person" colspan="2"><strong>Thank you </strong><br />' + (feature.properties['Person'] !== null ? autolinker.link(String(feature.properties['Person']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                        </tr>\
-                        <tr>\
-                            <td class="visible-with-data" id="Country_Origin" colspan="2"><strong>Country of the Friend</strong><br />' + (feature.properties['Country_Origin'] !== null ? autolinker.link(String(feature.properties['Country_Origin']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                        </tr>\
-                        <tr>\
-                            <th scope="row">City of the Friend</th>\
-                            <td>' + (feature.properties['City_Origin'] !== null ? autolinker.link(String(feature.properties['City_Origin']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                        </tr>\
-                        <tr>\
-                            <th scope="row">Year</th>\
-                            <td>' + (feature.properties['Year'] !== null ? autolinker.link(String(feature.properties['Year']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
-                        </tr>\
-                    </table>';
+
+
+            var popupContent =
+                '<table>' +
+
+                // --- Images row ---
+                '<tr>' +
+                '<td colspan="2" style="text-align:center;">' +
+
+                (feature.properties["Side_1"]
+                    ? '<a href="' + feature.properties["Side_1"] + '" target="_blank">' +
+                    '<img src="' + feature.properties["Side_1"] + '" style="width:120px; height:auto; border-radius:4px; margin:4px;">' +
+                    '</a>'
+                    : '') +
+
+                (feature.properties["Side_2"]
+                    ? '<a href="' + feature.properties["Side_2"] + '" target="_blank">' +
+                    '<img src="' + feature.properties["Side_2"] + '" style="width:120px; height:auto; border-radius:4px; margin:4px;">' +
+                    '</a>'
+                    : '') +
+
+                '</td>' +
+                '</tr>' +
+
+                // --- Person ---
+                '<tr>' +
+                '<td class="visible-with-data" id="Person" colspan="2"><strong>Thank you</strong><br />' +
+                (feature.properties['Person'] !== null
+                    ? autolinker.link(String(feature.properties['Person']).replace(/'/g, "\\'").toLocaleString())
+                    : '') +
+                '</td>' +
+                '</tr>' +
+
+                // --- Country ---
+                '<tr>' +
+                '<td class="visible-with-data" id="Country_Origin" colspan="2"><strong>Country of the Friend</strong><br />' +
+                (feature.properties['Country_Origin'] !== null
+                    ? autolinker.link(String(feature.properties['Country_Origin']).replace(/'/g, "\\'").toLocaleString())
+                    : '') +
+                '</td>' +
+                '</tr>' +
+
+                // --- City ---
+                '<tr>' +
+                '<th scope="row">City of the Friend</th>' +
+                '<td>' +
+                (feature.properties['City_Origin'] !== null
+                    ? autolinker.link(String(feature.properties['City_Origin']).replace(/'/g, "\\'").toLocaleString())
+                    : '') +
+                '</td>' +
+                '</tr>' +
+
+                // --- Year ---
+                '<tr>' +
+                '<th scope="row">Year</th>' +
+                '<td>' +
+                (feature.properties['Year'] !== null
+                    ? autolinker.link(String(feature.properties['Year']).replace(/'/g, "\\'").toLocaleString())
+                    : '') +
+                '</td>' +
+                '</tr>' +
+
+                '</table>';
+
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
             layer.on('popupopen', function (e) {
                 addClassToPopupIfMedia(content, e.popup);
