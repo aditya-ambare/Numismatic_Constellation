@@ -387,7 +387,7 @@
 
 
                 '<tr>' +
-                '<th scope="row">Person</th>' +
+                '<th scope="row">Friend</th>' +
                 '<td>' + (feature.properties["Person"] || '') + '</td>' +
                 '</tr>' 
                 '</table>';
@@ -745,6 +745,17 @@
 
         bounds_group.addLayer(layer_CountriesofTheCoins_3);
         map.addLayer(layer_CountriesofTheCoins_3);
+
+        // 🔗 Stable reference for ALL coin features
+        var coinsLayer = layer_CountriesofTheCoins_3;
+
+
+
+
+
+
+
+
         function pop_Friends_4(feature, layer) {
             layer.on({
                 mouseout: function (e) {
@@ -1168,12 +1179,68 @@
         });
         lay.addTo(map);
         setBounds();
-        map.addControl(new L.Control.Search({
-            layer: layer_CountriesofTheCoins_3,
+
+
+        // search and highlight all coins by person
+        // Reference the coins layer
+        var coinsLayer = layer_CountriesofTheCoins_3;
+
+        // Add search control for Person
+        var searchControl = new L.Control.Search({
+            layer: coinsLayer,
+            propertyName: 'Person',
             initial: false,
-            hideMarkerOnCollapse: true,
-            propertyName: 'Person'
-        }));
+            hideMarkerOnCollapse: true
+        });
+        map.addControl(searchControl);
+
+        // Highlight all coins by the same person when found
+        searchControl.on('search:locationfound', function (e) {
+            var person = e.layer.feature.properties.Person;
+
+            coinsLayer.eachLayer(function (layer) {
+                if (!layer.feature || !layer.feature.properties) return;
+
+                if (layer.feature.properties.Person === person) {
+                    // Increase radius and change color
+                    if (layer.setStyle) {
+                        layer.setStyle({
+                            color: '#ff4444',
+                            fillColor: '#ff4444',
+                            fillOpacity: 1,
+                            weight: 2
+                        });
+                    }
+                    if (layer.setRadius) {
+                        layer.setRadius(8);
+                    }
+                }
+            });
+        });
+
+        // Reset all coins to default style when search is collapsed
+        searchControl.on('search:collapsed', function () {
+            coinsLayer.eachLayer(function (layer) {
+                if (!layer.feature || !layer.feature.properties) return;
+
+                if (layer.setStyle) {
+                    layer.setStyle({
+                        color: '#FFD700',
+                        fillColor: '#FFD700',
+                        fillOpacity: 0.7,
+                        weight: 1
+                    });
+                }
+                if (layer.setRadius) {
+                    layer.setRadius(4);
+                }
+            });
+        });
+
+
+
+
+
         if (typeof url === 'undefined') {
             document.getElementsByClassName('search-button')[0].className += ' fa fa-binoculars';
         } else {
