@@ -321,3 +321,13 @@ html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
     top: 50%;
     right: 120%;
 }
+
+/* Smooth slider transitions */
+.noUi-connect {
+    transition: width 0.6s ease, left 0.6s ease;
+}
+
+.noUi-handle {
+    transition: left 0.6s ease;
+}
+

@@ -1406,6 +1406,77 @@
             val_Year.innerHTML = values.join(' - ');
             filterFunc()
         });
+
+        /* ===============================
+   YEAR SLIDER AUTOPLAY (noUiSlider)
+   =============================== */
+
+        var autoplayInterval = null;
+        var autoplayDelay = 4000;     // ms between year changes
+        var idleRestartDelay = 60000; // restart autoplay after 1 min idle
+        var idleTimer = null;
+        var isAutoplaying = true;
+
+        function startAutoplay() {
+            if (autoplayInterval) return;
+
+            isAutoplaying = true;
+
+            autoplayInterval = setInterval(function () {
+                var slider = sel_Year.noUiSlider;
+                var values = slider.get();
+
+                var lower = parseInt(values[0]);   // fixed year (e.g. 2019)
+                var current = parseInt(values[1]); // moving year
+
+                var min = slider.options.range.min;
+                var max = slider.options.range.max;
+
+                var next = current + 1 > max ? min : current + 1;
+
+                // Move ONLY the upper handle
+                slider.set([lower, next]);
+
+                showRandomCoinForYear(next);
+
+            }, autoplayDelay);
+        }
+
+        function stopAutoplay() {
+            if (autoplayInterval) {
+                clearInterval(autoplayInterval);
+                autoplayInterval = null;
+            }
+            isAutoplaying = false;
+        }
+
+        function restartAutoplayAfterIdle() {
+            clearTimeout(idleTimer);
+            idleTimer = setTimeout(function () {
+                startAutoplay();
+            }, idleRestartDelay);
+        }
+        /* ===============================
+   USER INTERACTION HANDLERS
+   =============================== */
+
+        // Any interaction stops autoplay
+        map.on('mousedown wheel touchstart keydown', function () {
+            stopAutoplay();
+            restartAutoplayAfterIdle();
+        });
+
+        // Slider interaction
+        sel_Year.noUiSlider.on('start', function () {
+            stopAutoplay();
+        });
+
+        sel_Year.noUiSlider.on('change', function () {
+            restartAutoplayAfterIdle();
+        });
+
+        // Start autoplay after map is ready
+        setTimeout(startAutoplay, 1500);
     </script>
 </body>
 </html>
