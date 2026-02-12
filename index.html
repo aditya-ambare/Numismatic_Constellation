@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,22 +20,27 @@
 
     <style>
         /* Additional styles */
-        html, body, #map {
+        html,
+        body,
+        #map {
             width: 100%;
             height: 100%;
             padding: 0;
             margin: 0;
-            font-family: 'Open Sans', Arial, sans-serif; /* Apply Open Sans as the default font */
+            font-family: 'Open Sans', Arial, sans-serif;
+            /* Apply Open Sans as the default font */
             font-weight: 300;
         }
 
         /* Existing styles */
-        html, body {
+        html,
+        body {
             width: 100%;
             height: 100%;
             margin: 0;
             padding: 0;
-            overflow: hidden; /* Prevent scrollbars */
+            overflow: hidden;
+            /* Prevent scrollbars */
         }
 
         #map {
@@ -50,43 +56,52 @@
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
-            width: 600px; /* 🔑 MATCH slider width */
+            width: 600px;
+            /* 🔑 MATCH slider width */
             background-color: rgba(0, 0, 0, 0.0);
             padding: 10px;
             border-radius: 5px;
-            box-sizing: border-box; /* 🔑 prevents overflow */
+            box-sizing: border-box;
+            /* 🔑 prevents overflow */
             color: white;
             font-size: 16px;
         }
 
-
-        /* Slider styling */
-        .slider {
-            height: 18px; /* Slider height */
-            width: 600px;
-            
-            margin-bottom: 20px; /* Space below the slider */
+        /* Move ticks and labels above slider */
+        .noUi-pips-horizontal {
+            top: -40px;
+            height: 40px;
         }
 
-        .centered-content {
-            text-align: left; /* Center-align content */
-            width: 100%;
+        .noUi-marker-horizontal.noUi-marker-large,
+        .noUi-marker-horizontal.noUi-marker-sub {
+            top: auto;
+            bottom: 0;
+            width: 2px !important;
+            margin-left: -1px;
         }
 
-        .filterlabel {
-            text-align: left; /* Left-align the text */
-            margin-bottom: 10px; /* Add space below */
-            cursor: pointer;
-            width: 600px; /* Match the width of the slider */
-            margin-left: calc(50% - 300px); /* Align the button with the slider */
+        .noUi-pips {
+            z-index: -1;
         }
+
+        .noUi-value-horizontal {
+            top: 0;
+            transform: translate(-50%, 0);
+        }
+
+
         /* Reset button styling */
         .resetfilterlabel {
-            text-align: left; /* Center-align the reset text */
-            margin-top: 5px; /* Add space above the button */
+            text-align: left;
+            /* Center-align the reset text */
+            margin-top: 5px;
+            /* Add space above the button */
             cursor: pointer;
-            width: 600px; /* Match the width of the slider */
-            margin-left: calc(50% - 300px); /* Align the button with the slider */
+            width: 600px;
+            /* Match the width of the slider */
+            margin-left: calc(50% - 300px);
+            /* Align the button with the slider */
         }
 
         /* Hide default attribution */
@@ -97,18 +112,86 @@
         /* Custom attribution positioning */
         .leaflet-bottom {
             position: absolute;
-            bottom: 10px; /* Adjust as needed */
-            left: 10px; /* Adjust as needed */
+            bottom: 10px;
+            /* Adjust as needed */
+            left: 10px;
+            /* Adjust as needed */
             z-index: 1000;
             background-color: rgba(255, 255, 255, 0.8);
             padding: 5px 10px;
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+
+        /* Custom Popup Styles */
+        .leaflet-popup-content-wrapper {
+            max-height: 60vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            text-align: left;
+        }
+
+        .popup-right,
+        .popup-left {
+            bottom: auto !important;
+            /* Override default bottom positioning */
+        }
+
+        .popup-right .leaflet-popup-content-wrapper,
+        .popup-left .leaflet-popup-content-wrapper {
+            transform: translateY(-50%);
+            position: relative;
+            /* Center vertically relative to anchor */
+        }
+
+        /* Popup on the RIGHT of the marker */
+        .popup-right .leaflet-popup-tip-container {
+            display: none;
+        }
+
+        .popup-right .leaflet-popup-content-wrapper::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: -10px;
+            margin-top: -10px;
+            border-width: 10px 10px 10px 0;
+            border-style: solid;
+            border-color: transparent white transparent transparent;
+        }
+
+        /* Popup on the LEFT of the marker */
+        .popup-left .leaflet-popup-tip-container {
+            display: none;
+        }
+
+        .popup-left .leaflet-popup-content-wrapper::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: -10px;
+            margin-top: -10px;
+            border-width: 10px 0 10px 10px;
+            border-style: solid;
+            border-color: transparent transparent transparent white;
+        }
+
+        /* Ensure close button is positioned correctly */
+        .leaflet-popup-close-button {
+            display: none !important;
+        }
+
+        /* Fix close button position for vertically centered popups */
+        .popup-right .leaflet-popup-close-button,
+        .popup-left .leaflet-popup-close-button {
+            top: 0 !important;
+            margin-top: 5px !important;
+        }
     </style>
 
     <title>The Numismatic Constellation</title>
 </head>
+
 <body>
     <div id="map"></div>
     <div id="menu"></div> // Edit it
@@ -342,7 +425,7 @@
                 mouseover: highlightFeature,
             });
 
-           
+
 
             // All countries with images - make it clickable
             var popupContent =
@@ -391,14 +474,14 @@
                 '<tr>' +
                 '<th scope="row">Friend</th>' +
                 '<td>' + (feature.properties["Person"] || '') + '</td>' +
-                '</tr>' 
-                '</table>';
+                '</tr>'
+            '</table>';
 
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
             layer.on('popupopen', function (e) {
                 addClassToPopupIfMedia(content, e.popup);
             });
-            layer.bindPopup(content, { maxHeight: 1000 });
+            layer.bindPopup(content, { maxHeight: 1000, autoPan: false, closeButton: false });
 
 
         }
@@ -561,7 +644,7 @@
             layer.on('popupopen', function (e) {
                 addClassToPopupIfMedia(content, e.popup);
             });
-            layer.bindPopup(content, { maxHeight: 1000 });
+            layer.bindPopup(content, { maxHeight: 1000, autoPan: false, closeButton: false });
         }
         //Replace
         function style_PathtakenbytheCoins_2_0() {
@@ -604,7 +687,7 @@
                 mouseover: highlightFeature,
             });
 
-            
+
 
             var popupContent = `
                 <table style="width:100%;">
@@ -680,7 +763,7 @@
             layer.on('popupopen', function (e) {
                 addClassToPopupIfMedia(content, e.popup);
             });
-            layer.bindPopup(content, { maxHeight: 1000 });
+            layer.bindPopup(content, { maxHeight: 1000, autoPan: false, closeButton: false });
 
 
         }
@@ -837,7 +920,7 @@
             layer.on('popupopen', function (e) {
                 addClassToPopupIfMedia(content, e.popup);
             });
-            layer.bindPopup(content, { maxHeight: 1000 });
+            layer.bindPopup(content, { maxHeight: 1000, autoPan: false, closeButton: false });
         }
 
         function style_Friends_4_0() {
@@ -914,7 +997,7 @@
             layer.on('popupopen', function (e) {
                 addClassToPopupIfMedia(content, e.popup);
             });
-            layer.bindPopup(content, { maxHeight: 1000 });
+            layer.bindPopup(content, { maxHeight: 1000, autoPan: false, closeButton: false });
         }
 
         function style_CityofMeeting_5_0() {
@@ -988,7 +1071,7 @@
             layer.on('popupopen', function (e) {
                 addClassToPopupIfMedia(content, e.popup);
             });
-            layer.bindPopup(content, { maxHeight: 1000 });
+            layer.bindPopup(content, { maxHeight: 1000, autoPan: false, closeButton: false });
         }
 
         function style_G_6_0() {
@@ -1062,7 +1145,7 @@
             layer.on('popupopen', function (e) {
                 addClassToPopupIfMedia(content, e.popup);
             });
-            layer.bindPopup(content, { maxHeight: 1000 });
+            layer.bindPopup(content, { maxHeight: 1000, autoPan: false, closeButton: false });
         }
 
         function style_Origin_7_0() {
@@ -1101,7 +1184,7 @@
         });
         bounds_group.addLayer(layer_Origin_7);
         map.addLayer(layer_Origin_7);
-        
+
 
 
 
@@ -1134,7 +1217,7 @@
             obj2.gcd = e.choice;
             x = L.geoJSON(obj2.gcd).addTo(map);
             var label = typeof obj2.gcd.properties.label === 'undefined' ? obj2.gcd.properties.display_name : obj2.gcd.properties.label;
-            obj3.marker = L.marker(x.getLayers()[0].getLatLng()).bindPopup(label).addTo(map);
+            obj3.marker = L.marker(x.getLayers()[0].getLatLng()).bindPopup(label, { closeButton: false }).addTo(map);
             map.setView(x.getLayers()[0].getLatLng(), 17);
             z = typeof e.choice.properties.label === 'undefined' ? e.choice.properties.display_name : e.choice.properties.label;
             console.log(e);
@@ -1395,6 +1478,16 @@
             range: {
                 min: 2019,
                 max: 2026
+            },
+            pips: {
+                mode: 'steps',
+                density: 10,
+                filter: function (value, type) {
+                    return (value === 2019 || value === 2026) ? 1 : 2;
+                },
+                format: wNumb({
+                    decimals: 0
+                })
             }
         });
         sel_Year.noUiSlider.on('update', function (values) {
@@ -1442,6 +1535,33 @@
             }, autoplayDelay);
         }
 
+        /* 
+         * Randomly selects a coin from the given year and opens its popup.
+         */
+        function showRandomCoinForYear(year) {
+            var candidates = [];
+            // coinsLayer is defined globally as layer_CountriesofTheCoins_3
+            coinsLayer.eachLayer(function (layer) {
+                // Ensure layer has features and Year property matches
+                if (layer.feature && layer.feature.properties &&
+                    parseInt(layer.feature.properties.Year) === year) {
+                    candidates.push(layer);
+                }
+            });
+
+            if (candidates.length > 0) {
+                var randomIndex = Math.floor(Math.random() * candidates.length);
+                var selectedLayer = candidates[randomIndex];
+                // Check if the layer is currently visible on the map (should be, due to filter)
+                if (map.hasLayer(selectedLayer)) {
+                    selectedLayer.openPopup();
+                } else {
+                    // If layer is not on map, try adding it or just open popup (Leaflet might handle it)
+                    selectedLayer.openPopup();
+                }
+            }
+        }
+
         function stopAutoplay() {
             if (autoplayInterval) {
                 clearInterval(autoplayInterval);
@@ -1477,6 +1597,55 @@
 
         // Start autoplay after map is ready
         setTimeout(startAutoplay, 1500);
+
+        /* ===============================
+        SMART POPUP POSITIONING
+        =============================== */
+        map.on('popupopen', function (e) {
+            var popup = e.popup;
+            var latlng = popup.getLatLng();
+
+            // If popup is bound to a layer, use layer's latlng (more accurate for polygons/lines sometimes)
+            // but popup.getLatLng() is usually the anchor.
+
+            var containerPoint = map.latLngToContainerPoint(latlng);
+            var mapSize = map.getSize();
+
+            // Determine side based on horizontal position
+            var isLeft = containerPoint.x < mapSize.x / 2;
+
+            // Remove existing directional classes
+            L.DomUtil.removeClass(popup._container, 'popup-right');
+            L.DomUtil.removeClass(popup._container, 'popup-left');
+
+            if (isLeft) {
+                // Left side of screen -> Show to RIGHT
+                L.DomUtil.addClass(popup._container, 'popup-right');
+                popup.options.className = 'popup-right'; // Persistent for this open session
+                popup.options.offset = [20, 0]; // Nudge right
+            } else {
+                // Right side of screen -> Show to LEFT
+                L.DomUtil.addClass(popup._container, 'popup-left');
+                popup.options.className = 'popup-left';
+                popup.options.offset = [-20, 0]; // Nudge left
+            }
+
+            // Force Leaflet to re-calculate position with new offset
+            popup._updatePosition();
+            popup._updateLayout();
+
+            // Add close button styling fix if needed (it's inside wrapper, so it moves with it)
+
+            // NOW manually trigger autoPan since we disabled it in bindPopup
+            if (popup._adjustPan) {
+                // Add a small delay to ensure layout is updated and prevent race conditions
+                setTimeout(function () {
+                    popup._adjustPan();
+                }, 100);
+            }
+        });
+
     </script>
 </body>
+
 </html>
