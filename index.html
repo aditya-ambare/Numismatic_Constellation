@@ -222,7 +222,13 @@
     <script>
         var highlightLayer;
         function highlightFeature(e) {
+            // Reset previous highlight if any
+            if (highlightLayer) {
+                resetHighlight({ target: highlightLayer });
+            }
+
             var layer = e.target;
+            highlightLayer = layer;
 
             if (
                 layer.feature.geometry.type === 'LineString' ||
@@ -232,7 +238,7 @@
                     color: 'rgba(255, 0, 0, 0.7)',   // transparent red line
                     weight: 3
                 });
-            } else {
+            } else if (typeof layer.setStyle === 'function') {
                 layer.setStyle({
                     fillColor: 'rgba(255, 0, 0, 0.4)', // transparent red fill
                     fillOpacity: 0.4,
@@ -242,7 +248,27 @@
             }
 
             if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-                layer.bringToFront();
+                if (typeof layer.bringToFront === 'function') {
+                    layer.bringToFront();
+                }
+            }
+        }
+
+        function resetHighlight(e) {
+            var layer = e.target;
+            if (!layer) return;
+
+            // Clear the highlighted layer reference if it matches
+            if (layer === highlightLayer) {
+                highlightLayer = null;
+            }
+
+            // Standard Leaflet GeoJSON resetStyle
+            for (var i in layer._eventParents) {
+                var parent = layer._eventParents[i];
+                if (parent && typeof parent.resetStyle === 'function') {
+                    parent.resetStyle(layer);
+                }
             }
         }
 
@@ -415,13 +441,7 @@
         map.addLayer(layer_World_0);
         function pop_AllCountries_1(feature, layer) {
             layer.on({
-                mouseout: function (e) {
-                    for (var i in e.target._eventParents) {
-                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
-                            e.target._eventParents[i].resetStyle(e.target);
-                        }
-                    }
-                },
+                mouseout: resetHighlight,
                 mouseover: highlightFeature,
             });
 
@@ -626,13 +646,7 @@
         map.addLayer(layer_AllCountries_1);
         function pop_PathtakenbytheCoins_2(feature, layer) {
             layer.on({
-                mouseout: function (e) {
-                    for (var i in e.target._eventParents) {
-                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
-                            e.target._eventParents[i].resetStyle(e.target);
-                        }
-                    }
-                },
+                mouseout: resetHighlight,
                 mouseover: highlightFeature,
             });
             var popupContent = '<table>\
@@ -677,13 +691,7 @@
         map.addLayer(layer_PathtakenbytheCoins_2);
         function pop_CountriesofTheCoins_3(feature, layer) {
             layer.on({
-                mouseout: function (e) {
-                    for (var i in e.target._eventParents) {
-                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
-                            e.target._eventParents[i].resetStyle(e.target);
-                        }
-                    }
-                },
+                mouseout: resetHighlight,
                 mouseover: highlightFeature,
             });
 
@@ -843,13 +851,7 @@
 
         function pop_Friends_4(feature, layer) {
             layer.on({
-                mouseout: function (e) {
-                    for (var i in e.target._eventParents) {
-                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
-                            e.target._eventParents[i].resetStyle(e.target);
-                        }
-                    }
-                },
+                mouseout: resetHighlight,
                 mouseover: highlightFeature,
             });
 
@@ -975,13 +977,7 @@
 
         function pop_CityofMeeting_5(feature, layer) {
             layer.on({
-                mouseout: function (e) {
-                    for (var i in e.target._eventParents) {
-                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
-                            e.target._eventParents[i].resetStyle(e.target);
-                        }
-                    }
-                },
+                mouseout: resetHighlight,
                 mouseover: highlightFeature,
             });
             var popupContent = '<table>' +
@@ -1053,13 +1049,7 @@
 
         function pop_G_6(feature, layer) {
             layer.on({
-                mouseout: function (e) {
-                    for (var i in e.target._eventParents) {
-                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
-                            e.target._eventParents[i].resetStyle(e.target);
-                        }
-                    }
-                },
+                mouseout: resetHighlight,
                 mouseover: highlightFeature,
             });
             var popupContent = '<table>\
@@ -1127,13 +1117,7 @@
 
         function pop_Origin_7(feature, layer) {
             layer.on({
-                mouseout: function (e) {
-                    for (var i in e.target._eventParents) {
-                        if (typeof e.target._eventParents[i].resetStyle === 'function') {
-                            e.target._eventParents[i].resetStyle(e.target);
-                        }
-                    }
-                },
+                mouseout: resetHighlight,
                 mouseover: highlightFeature,
             });
             var popupContent = '<table>\
@@ -1184,6 +1168,7 @@
         });
         bounds_group.addLayer(layer_Origin_7);
         map.addLayer(layer_Origin_7);
+
 
 
 
