@@ -1491,8 +1491,6 @@
 
         var autoplayInterval = null;
         var autoplayDelay = 4000;     // ms between year changes
-        var idleRestartDelay = 60000; // restart autoplay after 1 min idle
-        var idleTimer = null;
         var isAutoplaying = true;
 
         function startAutoplay() {
@@ -1555,29 +1553,57 @@
             isAutoplaying = false;
         }
 
-        function restartAutoplayAfterIdle() {
-            clearTimeout(idleTimer);
-            idleTimer = setTimeout(function () {
-                startAutoplay();
-            }, idleRestartDelay);
-        }
         /* ===============================
    USER INTERACTION HANDLERS
    =============================== */
 
-        // Any interaction stops autoplay
-        map.on('mousedown wheel touchstart keydown', function () {
+        var lastMouseX = null;
+        var lastMouseY = null;
+
+        function handleUserInteraction(e) {
+            // Get original event if it's a Leaflet event wrapper
+            var originalEvent = (e && e.originalEvent) ? e.originalEvent : e;
+            var eventType = e ? (e.type || (originalEvent && originalEvent.type)) : null;
+
+            // Filter out initial mousemove event on page load if cursor hasn't moved
+            if (eventType === 'mousemove' && originalEvent) {
+                if (lastMouseX === null || lastMouseY === null) {
+                    lastMouseX = originalEvent.clientX;
+                    lastMouseY = originalEvent.clientY;
+                    return;
+                }
+                if (originalEvent.clientX === lastMouseX && originalEvent.clientY === lastMouseY) {
+                    return;
+                }
+            }
+
             stopAutoplay();
-            restartAutoplayAfterIdle();
-        });
+
+            // Remove all interaction listeners once triggered
+            window.removeEventListener('click', handleUserInteraction);
+            window.removeEventListener('mousemove', handleUserInteraction);
+            window.removeEventListener('mousedown', handleUserInteraction);
+            window.removeEventListener('wheel', handleUserInteraction);
+            window.removeEventListener('keydown', handleUserInteraction);
+            window.removeEventListener('touchstart', handleUserInteraction);
+
+            map.off('mousedown mousemove click wheel touchstart keydown', handleUserInteraction);
+        }
+
+        // Register window interaction listeners
+        window.addEventListener('click', handleUserInteraction);
+        window.addEventListener('mousemove', handleUserInteraction);
+        window.addEventListener('mousedown', handleUserInteraction);
+        window.addEventListener('wheel', handleUserInteraction);
+        window.addEventListener('keydown', handleUserInteraction);
+        window.addEventListener('touchstart', handleUserInteraction);
+
+        // Register Leaflet map interaction listeners
+        map.on('mousedown mousemove click wheel touchstart keydown', handleUserInteraction);
 
         // Slider interaction
         sel_Year.noUiSlider.on('start', function () {
-            stopAutoplay();
-        });
-
-        sel_Year.noUiSlider.on('change', function () {
-            restartAutoplayAfterIdle();
+            handleUserInteraction();
         });
 
         // Start autoplay after map is ready
