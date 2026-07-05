@@ -671,7 +671,7 @@
                 lineJoin: 'bevel',
                 weight: 1.0,
                 fillOpacity: 0,
-                interactive: true,
+                interactive: false,
             }
             //Replace
         }
@@ -680,7 +680,7 @@
         map.getPane('pane_PathtakenbytheCoins_2').style['mix-blend-mode'] = 'normal';
         var layer_PathtakenbytheCoins_2 = new L.geoJson(json_PathtakenbytheCoins_2, {
             attribution: '',
-            interactive: true,
+            interactive: false,
             dataVar: 'json_PathtakenbytheCoins_2',
             layerName: 'layer_PathtakenbytheCoins_2',
             pane: 'pane_PathtakenbytheCoins_2',
@@ -1494,9 +1494,8 @@
         var isAutoplaying = true;
 
         function startAutoplay() {
+            if (!isAutoplaying) return;
             if (autoplayInterval) return;
-
-            isAutoplaying = true;
 
             autoplayInterval = setInterval(function () {
                 var slider = sel_Year.noUiSlider;
